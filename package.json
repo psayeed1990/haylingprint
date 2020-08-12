@@ -1,0 +1,51 @@
+{
+  "name": "haylingprint",
+  "version": "1.0.0",
+  "description": "A website to sell print, uniforms etc",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "server": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/psayeed1990/haylingprint.git"
+  },
+  "keywords": [
+    "print",
+    "shop",
+    "uniform",
+    "ecommerce",
+    "sell"
+  ],
+  "author": "Abu Sayeed Mondal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/psayeed1990/quorashop/issues"
+  },
+  "homepage": "https://github.com/psayeed1990/quorashop#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-mongo-sanitize": "^2.0.0",
+    "express-rate-limit": "^5.1.3",
+    "helmet": "^3.23.3",
+    "hpp": "^0.2.3",
+    "html-to-text": "^5.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.26",
+    "multer": "^1.4.2",
+    "nodemailer": "^6.4.11",
+    "sharp": "^0.25.4",
+    "slugify": "^1.4.5",
+    "validator": "^13.1.1",
+    "xss-clean": "^0.1.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}

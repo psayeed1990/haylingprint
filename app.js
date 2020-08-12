@@ -60,6 +60,12 @@ app.use(
 app.use(compression());
 
 //set route
+const router = express.Router();
+router.get('/', (req, res) => {
+  res.send(
+    'This front end view is in underconstruction. Go to http://haylingprint.co.uk/api/v1 for backend api'
+  );
+});
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/categories', categoryRoutes);

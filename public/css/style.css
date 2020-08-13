@@ -266,3 +266,7 @@ button,
 .form a {
   color: #999;
 }
+
+.error {
+  color: red;
+}

@@ -1,5 +1,8 @@
 const express = require('express');
 const router = express.Router();
+
+const authController = require('./../controllers/authController');
+
 router.get('/', (req, res) => {
   res.render('home');
 });
@@ -19,8 +22,13 @@ router.get('/about', (req, res) => {
   res.render('about');
 });
 
-router.get('/account', (req, res) => {
-  res.render('user/account');
-});
+router.get(
+  '/account',
+  authController.protect,
+  authController.restrictTo('user'),
+  (req, res) => {
+    res.render('user/account');
+  }
+);
 
 module.exports = router;

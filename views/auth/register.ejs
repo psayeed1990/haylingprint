@@ -1,7 +1,7 @@
 
 <div id="page">
     <div id="register">
-        <form method="POST" action="/user/register" class="form">
+        <form method="POST" action="/api/v1/users/signup" class="form">
             <%- include("./../partials/error_messages") %>
             <input type="text" name="name" placeholder="Full Name" required
                 value="<%= typeof name != 'undefined' ? name : '' %>" />
@@ -13,8 +13,8 @@
                 value="<%= typeof email != 'undefined' ? email : '' %>" />
             <input type="password" name="password" placeholder="password" required
                 value="<%= typeof password != 'undefined' ? password : '' %>" />
-            <input type="password" name="password2" placeholder="password again" required
-                value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+            <input type="password" name="passwordConfirm" placeholder="password again" required
+                value="<%= typeof passwordConfirm != 'undefined' ? passwordConfirm : '' %>" />
             <input type="submit" value="Register" />
         </form>
     </div>

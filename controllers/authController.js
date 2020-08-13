@@ -146,9 +146,13 @@ exports.protect = catchAsync(async (req, res, next) => {
   }
 
   if (!token) {
-    return next(
-      new AppError('You are not logged in! Please log in to get access.', 401)
-    );
+    //return next(
+    //  new AppError('You are not logged in! Please log in to get access.', 401)
+    //);
+
+    let login_errors = {};
+    login_errors.error = 'Please log in to get access';
+    return res.render('auth/login', { login_errors });
   }
 
   // 2) Verification token
@@ -167,9 +171,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // 4) Check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
-    return next(
-      new AppError('User recently changed password! Please log in again.', 401)
-    );
+    res.send('User recently changed password! Please log in again.');
   }
 
   // GRANT ACCESS TO PROTECTED ROUTE

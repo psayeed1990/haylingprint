@@ -1,0 +1,21 @@
+
+<div id="page">
+    <div id="register">
+        <form method="POST" action="/user/register" class="form">
+            <%- include("./../partials/error_messages") %>
+            <input type="text" name="name" placeholder="Full Name" required
+                value="<%= typeof name != 'undefined' ? name : '' %>" />
+            <input type="text" name="phone" placeholder="Phone Number" required
+                value="<%= typeof phone != 'undefined' ? phone : '' %>" />
+
+
+            <input type="email" name="email" placeholder="Email" required
+                value="<%= typeof email != 'undefined' ? email : '' %>" />
+            <input type="password" name="password" placeholder="password" required
+                value="<%= typeof password != 'undefined' ? password : '' %>" />
+            <input type="password" name="password2" placeholder="password again" required
+                value="<%= typeof password2 != 'undefined' ? password2 : '' %>" />
+            <input type="submit" value="Register" />
+        </form>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const expressLayout = require('express-ejs-layouts');
 const cookieParser = require('cookie-parser');
 const rateLimit = require('express-rate-limit');
 const mongoSanitize = require('express-mongo-sanitize');
@@ -23,6 +24,10 @@ app.enable('trust-proxy');
 //cors
 app.use(cors());
 app.options('*', cors());
+
+//view setup
+app.use(expressLayout);
+app.set('view engine', 'ejs');
 
 //set public folder
 app.use(express.static(path.join(__dirname, 'public')));
@@ -61,7 +66,7 @@ app.use(compression());
 
 //set route
 
-app.use('/', require('./routes/indexRoutes'));
+app.use('/', require('./routes/viewRoutes'));
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/categories', categoryRoutes);

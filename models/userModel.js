@@ -63,8 +63,8 @@ const userSchema = new Schema({
   },
   expire_at: {
     type: Date,
-    default: Date.now,
     expires: 86400,
+    default: Date.now() + 86400000,
   },
 });
 
@@ -86,7 +86,7 @@ userSchema.pre('save', function (next) {
 
 userSchema.pre(/^find/, function (next) {
   // this points to the current query
-  this.find({ active: { $ne: false }, emailVerified: { $ne: false } });
+  this.find({ active: { $ne: false } });
   next();
 });
 

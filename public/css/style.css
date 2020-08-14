@@ -305,7 +305,8 @@ p.btn {
   width: max-content;
 }
 
-#add-variable-btn {
+#add-variable-btn,
+.add-variable-btn {
   cursor: pointer;
 }
 

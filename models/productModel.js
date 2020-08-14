@@ -39,6 +39,7 @@ const productSchema = new Schema(
       trim: true,
     },
     slug: String,
+    SKU: String,
     priceDiscount: {
       type: Number,
       validate: {

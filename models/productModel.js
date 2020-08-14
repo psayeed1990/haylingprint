@@ -74,6 +74,14 @@ const productSchema = new Schema(
       required: [true, 'Stock is required'],
       default: 0,
     },
+
+    variants: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Product',
+      },
+    ],
+
     createdAt: {
       type: Date,
       default: Date.now(),

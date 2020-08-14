@@ -1,3 +1,7 @@
+a {
+  color: #9a9a9a;
+}
+
 /*start header codes */
 *,
 *::before,
@@ -272,6 +276,13 @@ button,
 .error {
   color: red;
 }
+
+select,
+input[type='file'] {
+  background: #7dd0e6;
+  box-shadow: 0 0 3px 0px #999;
+  border: 1px solid #a8deec;
+}
 /*ends form */
 
 /*starts product */
@@ -279,6 +290,35 @@ button,
 .single-product {
   margin: 20px;
   padding: 20px;
+}
+
+p.btn {
+  background-color: #7dd0e6;
+  margin: 10px auto;
+  padding: 10px;
+  color: #fff;
+  box-shadow: 0px 0px 3px 1px #8c8c8c;
+  border: none;
+  max-width: 300px;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: max-content;
+}
+
+#add-variable-btn {
+  cursor: pointer;
+}
+
+.variableProductsForm {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.variableProductsForm div {
+  margin: 30px;
+  padding: 30px;
+  background-color: #fafafa;
+  border: 1px solid #eee;
 }
 
 /*ends product*/

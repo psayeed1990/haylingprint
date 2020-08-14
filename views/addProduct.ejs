@@ -23,20 +23,70 @@
                 value="<%= typeof description != 'undefined' ? description : '' %>"></textarea>
             
             
-            <input type="text" name="stock" placeholder="Left in Stock" required
+            <input id ="deleteableStock" type="text" name="stock" placeholder="Left in Stock" required
                 value="<%= typeof stock != 'undefined' ? stock : '' %>" />
             
-            <label for="ad-table-img">Choose a image for the table:</label>
-            <input id="ad-table-img" name="imageCover" type="file" required />
+            <label id="deleteableLabel" for="deletableImg">Choose a image:</label>
+            <input id="deleteableImg" name="imageCover" type="file" required />
             
             
-            <input type="text" name="price" placeholder="Price" required value="<%= typeof price != 'undefined' ? price : '' %>" />
+            <input id="deleteablePrice" type="text" name="price" placeholder="Price" required value="<%= typeof price != 'undefined' ? price : '' %>" />
 
+            <!--Variable html code-->
+            <div id="variableProductsForm" class="variableProductsForm">
+
+
+            </div>
+
+            <p class="btn" id="add-variable-btn">Add a variable</p>
 
             <input type="submit" value="Add New Product" />
 
             
         </form>
     </div>
+
+<script>
+    let variableProductsForm = document.getElementById('variableProductsForm');
+    let isVariable = false;
+    let addVariableBtn = document.getElementById('add-variable-btn');
+    let variantForm = '<input type="text" name="variantName" placeholder="Variable name" required /><input type="text" name="variantValue" placeholder="Variable" required /><input type="text" name="stock" placeholder="Left in Stock" required /><label for="ad-table-img">Choose a image:</label><input name="imageCover" type="file" required /><input type="text" name="price" placeholder="Price" required />'
+
+    addVariableBtn.addEventListener('click', createVariable);
+    let counter = 3;
+    
+    function createVariable(e){
+        
+        e.preventDefault();
+
+        
+
+        if (!isVariable) {
+            document.getElementById('deleteableImg').style.display = 'none';
+            document.getElementById('deleteableLabel').style.display = 'none'
+            document.getElementById('deleteableStock').style.display = 'none'
+            document.getElementById('deleteablePrice').style.display = 'none'
+
+            variableProductsForm.innerHTML += '<div>' + '1 <br>' + variantForm + '</div>';
+          
+            variableProductsForm.innerHTML += '<div>' + '2 <br>' + variantForm + '</div>';
+            
+            
+
+
+
+            isVariable = true;
+        }else{
+            
+            variableProductsForm.innerHTML += '<div>' + counter + '<br>' + variantForm + '</div>';
+            counter += 1;
+        }
+        
+
+   
+
+    }
+
+</script>
 
 </div>

@@ -1,1 +1,22 @@
-<h1>This is home</h1>
+<div id="page">
+    <div id="home">
+    <h1>Products</h1>
+
+            <% if(typeof products != 'undefined'){ %>
+            
+                <% products.forEach((product) => { %>
+            
+                <div class="single-product">
+                <p> <%= product.name %></p>
+                <p>Category: <%= product.category.name %></p>
+                <p>Description: <%= product.description %></p>
+                <img src="/public/img/products/<%= product.imageCover %>">
+                <p>Price: <%= product.price %></p>
+                </div>
+            
+                <% }) %>
+            
+          
+            <% } %>
+            </div>
+</div>

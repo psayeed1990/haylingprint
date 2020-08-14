@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { default: slugify } = require('slugify');
+const slugify = require('slugify');
 const Schema = mongoose.Schema;
 
 const categorySchema = new Schema(
@@ -11,14 +11,21 @@ const categorySchema = new Schema(
       minlength: [2, 'Product name must be at least 2 characters long'],
       maxlength: [102, 'Product name must be maximum 102 characters long'],
     },
-    slug: String,
+    slug: {
+      type: String,
+    },
 
     createdAt: {
       type: Date,
       default: Date.now(),
       select: false,
     },
+    parentCategory: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Category',
+    },
   },
+
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
@@ -33,9 +40,9 @@ categorySchema.virtual('products', {
 });
 
 //slugify
-categorySchema.pre('save', (next) => {
+categorySchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
-  return next();
+  next();
 });
 
 module.exports = Category = mongoose.model('Category', categorySchema);

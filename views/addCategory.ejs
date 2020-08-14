@@ -1,0 +1,28 @@
+<div id="page">
+    <div id="register">
+        <form method="POST" action="/api/v1/categories" class="form">
+            <%- include("./partials/error_messages") %>
+            <input type="text" name="name" placeholder="Category Name" required
+                value="<%= typeof name != 'undefined' ? name : '' %>" />
+            
+
+            <% if(typeof categories != 'undefined'){ %>
+            
+            <select name="parentCategory" id="reservedtable">
+                <option selected disabled>Parent Category:</option>
+                <% categories.forEach((category) => { %>
+            
+            
+                <option value="<%= category.id %>"><%= category.name %></option>
+            
+            
+                <% }) %>
+                
+            </select>
+            <% } %>
+
+            
+            <input type="submit" value="Add Category" />
+        </form>
+    </div>
+</div>

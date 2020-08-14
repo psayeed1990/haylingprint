@@ -32,11 +32,11 @@ const productSchema = new Schema(
     description: {
       type: String,
       trim: true,
+      required: [true, 'A product must have a description'],
     },
     summary: {
       type: String,
       trim: true,
-      required: [true, 'A product must have a description'],
     },
     slug: String,
     priceDiscount: {

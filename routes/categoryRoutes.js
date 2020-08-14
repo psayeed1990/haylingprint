@@ -9,14 +9,11 @@ const router = express.Router();
 // POST /tour/234fad4/reviews
 // GET /tour/234fad4/reviews
 
-router
-  .route('/')
-  .get(categoryController.getAllCategories)
-  .post(
-    authController.protect,
-    authController.restrictTo('admin'),
-    categoryController.createCategory
-  );
+router.route('/').get(categoryController.getAllCategories).post(
+  /*authController.protect,
+    authController.restrictTo('admin'),*/
+  categoryController.createCategory
+);
 
 router
   .route('/:id')

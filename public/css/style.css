@@ -18,8 +18,9 @@ body {
   background: linear-gradient(90deg, #7dd0e6, #ac8fb3);*/
   background-color: #fff;
   font-family: 'Montserrat', sans-serif;
-  color: #fff;
+  color: #444;
   height: 100vh;
+  text-align: center;
 }
 
 .menu ol {
@@ -237,7 +238,8 @@ body {
   padding: 50px;
   text-align: center;
 }
-input {
+input,
+textarea {
   width: 70%;
   margin: 10px auto;
   padding: 10px;
@@ -270,3 +272,13 @@ button,
 .error {
   color: red;
 }
+/*ends form */
+
+/*starts product */
+
+.single-product {
+  margin: 20px;
+  padding: 20px;
+}
+
+/*ends product*/

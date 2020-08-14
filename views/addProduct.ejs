@@ -1,0 +1,42 @@
+<div id="page">
+    <div id="register">
+        <form method="POST" action="/api/v1/products/" class="form">
+            <%- include("./partials/error_messages") %>
+            <input type="text" name="name" placeholder="Product Name" required
+                value="<%= typeof name != 'undefined' ? name : '' %>" />
+            
+            <% if(typeof categories != 'undefined'){ %>
+            <select name="category" id="reservedtable" required>
+                <option selected disabled>Product Category:</option>
+                <% categories.forEach((category) => { %>
+            
+            
+                <option value="<%= category.id %>"><%= category.name %></option>
+            
+            
+                <% }) %>
+            
+            </select>
+            <% } %>
+            
+            <textarea name="description" placeholder="Description" required
+                value="<%= typeof description != 'undefined' ? description : '' %>"></textarea>
+            
+            
+            <input type="text" name="stock" placeholder="Left in Stock" required
+                value="<%= typeof stock != 'undefined' ? stock : '' %>" />
+            
+            <label for="ad-table-img">Choose a image for the table:</label>
+            <input id="ad-table-img" name="imageCover" type="file" required />
+            
+            
+            <input type="text" name="price" placeholder="Price" required value="<%= typeof price != 'undefined' ? price : '' %>" />
+
+
+            <input type="submit" value="Add New Product" />
+
+            
+        </form>
+    </div>
+
+</div>

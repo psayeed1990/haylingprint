@@ -9,7 +9,7 @@
                 <% products.forEach((product) => { %>
             
                 <div class="single-product">
-                <p> <%= product.name %></p>
+                <a href="/products/<%= product.id%>"><p> <%= product.name %></p></a>
                 <p>Category: <%= product.category.name %></p>
                 <p>Description: <%= product.description %></p>
                 <img src="/public/img/products/<%= product.imageCover %>">

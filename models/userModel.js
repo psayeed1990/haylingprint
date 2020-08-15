@@ -21,7 +21,7 @@ const userSchema = new Schema({
   },
   password: {
     type: String,
-    minlength: [6, 'password must be minimum 6 characters long'],
+    minlength: [12, 'password must be minimum 12 characters long'],
     maxlength: [100, 'password must be maximum 100 characters long'],
     required: [true, 'Password is required'],
     select: false,
@@ -69,10 +69,13 @@ const userSchema = new Schema({
 });
 
 userSchema.pre('save', async function (next) {
+  // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
 
+  // Hash the password with cost of 12
   this.password = await bcrypt.hash(this.password, 12);
 
+  // Delete passwordConfirm field
   this.passwordConfirm = undefined;
   next();
 });
@@ -120,8 +123,11 @@ userSchema.methods.createPasswordResetToken = function () {
 };
 
 //compare password
-userSchema.methods.correctPassword = async (savedPassword, sentPassword) => {
-  return await bcrypt.compare(savedPassword, sentPassword);
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 module.exports = User = mongoose.model('User', userSchema);

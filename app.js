@@ -67,6 +67,7 @@ app.use(compression());
 //set route
 
 app.use('/', require('./routes/viewRoutes'));
+
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/categories', categoryRoutes);

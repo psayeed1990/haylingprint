@@ -1,0 +1,34 @@
+<div class="admin">
+<form method="POST" action="/admin/home">
+    <div class="home-admin-input">
+        <p>Give a product link you want on home page</p>
+        <label><label><%= url %>/products/</label></label>
+    <input type="text" name="link" placeholder="Give a product link you want on home page"> <input type="submit" value="add link"></div>
+
+</form>
+
+<% if(typeof homes != 'undefined'){ %>
+<% let counter = 1 %>
+<% homes.forEach((home) => { %>
+
+
+
+    <div class="single-home-link">
+        <p><%= counter %></p>
+        <form method="post" action="/admin/home/update/<%= home.id %>">
+            <label><%= url %>/products/</label><input type="text" name="link" value="<%= home.link._id %>">
+            <input type="submit" value="update">
+        </form>
+        <form method="post" action="/admin/home/delete/<%= home.id %>">
+            <label><%= url %>/products/</label><input type="text" name="link" value="<%= home.link._id %>">
+            <input type="submit" value="delete">
+        </form>
+    
+    </div>
+    <p><% counter + 1 %></p>
+<% }) %>
+
+
+<% } %>
+
+</div>

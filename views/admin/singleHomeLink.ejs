@@ -1,0 +1,20 @@
+<div class="page">
+    <% if(typeof home != 'undefined'){ %>
+
+
+    
+
+    <div class="single-product">
+        <form method="PATCH" action="/admin/home/<%= home.id %>">
+            <input type="text" name="link" value="<%= home.link %>">
+            <input type="submit" value="update">
+        </form>
+        <form method="DELETE" action="/admin/home/<%= home.id %>">
+            <input type="text" name="link" value="<%= home.link %>">
+            <input type="submit" value="delete">
+        </form>
+    
+    </div>
+
+    <% } %>
+</div>

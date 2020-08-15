@@ -8,7 +8,7 @@ const AppError = require('./../utils/appError');
 //create JWT token
 const createToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES,
+    expiresIn: process.env.JWT_EXPIRES_IN,
   });
 };
 
@@ -116,8 +116,11 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   const user = await User.findOne({ email }).select('+password');
+  if (!user) {
+    res.send('Use not found');
+  }
 
-  if (!user || (await user.correctPassword(password, user.password))) {
+  if (!user || !(await user.correctPassword(password, user.password))) {
     return next(new AppError('Email or password incorrect', 401));
   }
 

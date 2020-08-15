@@ -76,6 +76,11 @@ const productSchema = new Schema(
       default: 0,
     },
 
+    link: {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Home',
+    },
+
     variants: [
       {
         type: mongoose.Schema.ObjectId,

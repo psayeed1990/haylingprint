@@ -66,11 +66,10 @@ app.use(compression());
 
 //set route
 
-app.use('/', require('./routes/viewRoutes'));
-
 app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/categories', categoryRoutes);
+app.use('/', require('./routes/viewRoutes'));
 //404
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));

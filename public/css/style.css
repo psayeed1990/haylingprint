@@ -28,7 +28,7 @@ nav menuitem > menu {
   pointer-events: none;
 }
 nav > menu {
-  display: grid;
+  display: flex;
   grid-template-columns: 12% 15% 14% 13% 10%;
   grid-column-gap: 1%;
   align-content: center;

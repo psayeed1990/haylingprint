@@ -4,7 +4,7 @@ a {
 }
 body {
   background-color: #fff;
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'roboto', sans-serif;
   color: #444;
   height: 100vh;
   text-align: center;
@@ -14,6 +14,7 @@ body {
 #logo {
   float: left;
   margin: 10px;
+  padding-left: 25%;
 }
 
 .top-nav {
@@ -24,6 +25,7 @@ body {
 .right-top-menu {
   float: right;
   margin: 30px;
+  padding-right: 25%;
 }
 .right-top-menu a {
   text-decoration: underline;
@@ -33,29 +35,41 @@ ul {
   list-style: none;
 }
 
-.main-menu > ul {
-  display: grid;
+.pure-css-nav > nav ul li {
+  /* display: grid;
   grid-template-columns: 15% 15% 15% 15% 15%;
   align-items: center;
   align-self: center;
-  align-content: center;
-  background: #7dd0e6;
-  padding: 15px;
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  align-content: center; */
+  background: transparent;
 }
 .main-menu a {
   color: #646464;
 }
 
-#first-level,
-#second-level,
-#third-level {
-  display: none;
-  position: absolute;
+#first-level {
+  background-color: #7dd0e6;
 }
 
-#product-menu:hover > #first-level {
-  display: block;
+#product-menu:hover #first-level {
+  display: inline;
+}
+
+#second-level:hover #third-level {
+  display: inline;
+}
+
+.pure-css-nav > nav ul {
+  display: grid;
+  flex-wrap: wrap;
+  grid-template-columns: 10% 10% 10% 10% 10%;
+}
+.pure-css-nav > nav ul {
+  background: #7dd0e6;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+.pure-css-nav > nav > ul {
+  padding-left: 15%;
 }
 
 /*new menu code*/
@@ -174,3 +188,41 @@ p.btn {
   font-size: 12px;
 }
 /*ends admin*/
+
+/*starts home page */
+
+#page {
+  font-family: 'open sans condensed';
+}
+
+.home-offer {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  margin: 0 15%;
+}
+.left-offer {
+  background: url('/img/site/left.jpg');
+  background-position: center;
+}
+
+.top-right-offer {
+  background: url('/img/site/top-right.jpg');
+  background-position: center;
+}
+.bottom-right-offer {
+  background: url('/img/site/top-bottom.jpg');
+  background-position: center;
+}
+
+.home-offer h1 {
+  line-height: 0.6;
+  color: #fafafa;
+}
+.home-offer h2 {
+  color: #fafafa;
+}
+.overlay {
+  background-color: rgba(41, 142, 182, 0.3);
+  height: 100%;
+}
+/*ends home page */

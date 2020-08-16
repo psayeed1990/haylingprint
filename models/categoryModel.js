@@ -24,6 +24,12 @@ const categorySchema = new Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'Category',
     },
+    childCategory: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Category',
+      },
+    ],
   },
 
   {
@@ -42,6 +48,15 @@ categorySchema.virtual('products', {
 //slugify
 categorySchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+categorySchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'childCategory',
+    select: '-__v',
+  });
+
   next();
 });
 

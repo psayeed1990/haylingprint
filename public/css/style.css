@@ -46,6 +46,18 @@ ul {
 .main-menu a {
   color: #646464;
 }
+
+#first-level,
+#second-level,
+#third-level {
+  display: none;
+  position: absolute;
+}
+
+#product-menu:hover > #first-level {
+  display: block;
+}
+
 /*new menu code*/
 
 /*end header code */

@@ -7,10 +7,15 @@ const authController = require('./../controllers/authController');
 const adminController = require('./../controllers/adminController');
 const factory = require('./../controllers/handlers/factory');
 
+const categoriesFunction = async (req, res, next) => {
+  categories = await Category.find();
+  next();
+};
+router.use(categoriesFunction);
 router.get('/', async (req, res) => {
   const homeLinks = await Home.find();
 
-  res.render('home', { homeLinks });
+  res.render('home', { homeLinks, categories });
 });
 
 router.get('/register', (req, res) => {
@@ -38,19 +43,25 @@ router.get('/products/:id', async (req, res) => {
   const product = await Product.findById(id);
   res.render('singleProduct', { product });
 });
+//product
+router.get('/categories/:id', async (req, res) => {
+  const id = req.params.id;
+  const category = await Category.findById(id);
+  res.render('singleCategory', { category });
+});
 
 //admin only
 //for admin only
 router.use(authController.protect, authController.restrictTo('admin'));
 
 router.get('/admin/add-product', async (req, res) => {
-  const categories = await Category.find();
-  res.render('addProduct', { categories });
+  //const categories = await Category.find();
+  res.render('addProduct');
 });
 
 router.get('/admin/add-category', async (req, res) => {
-  const categories = await Category.find();
-  res.render('addCategory', { categories });
+  //const categories = await Category.find();
+  res.render('addCategory');
 });
 
 //dashboard

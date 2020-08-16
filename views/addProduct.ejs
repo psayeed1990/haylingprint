@@ -1,6 +1,6 @@
 <div id="page">
     <div id="register">
-        <form method="POST" action="/api/v1/products/" class="form">
+        <form method="POST" action="/api/v1/products/" class="form" enctype="multipart/form-data">
             <%- include("./partials/error_messages") %>
             <input type="text" name="name" placeholder="Product Name" required
                 value="<%= typeof name != 'undefined' ? name : '' %>" />
@@ -27,8 +27,8 @@
             <input id ="deleteableStock" type="text" name="stock" placeholder="Left in Stock" required
                 value="<%= typeof stock != 'undefined' ? stock : '' %>" />
             
-            <label id="deleteableLabel" for="deletableImg">Choose a image:</label>
-            <input id="deleteableImg" name="imageCover" type="file" required />
+            <label id="deleteableLabel" for="imageCover">Choose a image:</label>
+            <input id="imageCover" name="imageCover" type="file" required />
             
             <input type="text" name="SKU" placeholder="SKU" required value="<%= typeof SKU != 'undefined' ? SKU : '' %>" />
             <input id="deleteablePrice" type="text" name="price" placeholder="Price" required value="<%= typeof price != 'undefined' ? price : '' %>" />

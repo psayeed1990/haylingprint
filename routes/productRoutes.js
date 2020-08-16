@@ -24,6 +24,8 @@ router
   .post(
     authController.protect,
     authController.restrictTo('admin'),
+    productController.uploadProductImages,
+    productController.resizeProductImages,
     productController.createProduct
   );
 
@@ -34,7 +36,7 @@ router
     authController.protect,
     authController.restrictTo('admin'),
     productController.uploadProductImages,
-    productController.resizeProductImages,
+    //productController.resizeProductImages,
     productController.updateProduct
   )
   .delete(

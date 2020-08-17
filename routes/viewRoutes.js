@@ -8,6 +8,8 @@ const adminController = require('./../controllers/adminController');
 const factory = require('./../controllers/handlers/factory');
 const User = require('./../models/userModel');
 
+router.use(authController.isLoggedIn);
+
 const categoriesFunction = async (req, res, next) => {
   categories = await Category.find();
 

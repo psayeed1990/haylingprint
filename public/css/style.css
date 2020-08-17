@@ -13,19 +13,22 @@ body {
 
 #logo {
   float: left;
-  margin: 10px;
-  padding-left: 25%;
+  margin: 38px 0;
+  padding-left: 50px;
+  font-size: 2rem;
+  color: #d49b98;
 }
 
 .top-nav {
   display: grid;
   grid-template-columns: 50% 50%;
+  align-items: end;
 }
 
 .right-top-menu {
   float: right;
   margin: 30px;
-  padding-right: 25%;
+  padding-right: 50px;
 }
 .right-top-menu a {
   text-decoration: underline;
@@ -44,9 +47,11 @@ ul {
   background: transparent;
 }
 .main-menu a {
-  color: #646464;
+  color: #9a9a9a;
 }
-
+.pure-css-nav > nav ul li a {
+  color: #747474;
+}
 #first-level {
   background-color: #7dd0e6;
 }
@@ -65,12 +70,12 @@ ul {
   grid-template-columns: 10% 10% 10% 10% 10%;
 }
 .pure-css-nav > nav ul {
-  background: #7dd0e6;
+  background: transparent;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
 }
-.pure-css-nav > nav > ul {
+/* .pure-css-nav > nav > ul {
   padding-left: 15%;
-}
+} */
 
 /*new menu code*/
 
@@ -192,19 +197,36 @@ p.btn {
 /*starts home page */
 
 #page {
-  font-family: 'open sans condensed';
+  font-family: 'roboto';
 }
 
 .home-offer {
   display: grid;
   grid-template-columns: 60% 40%;
-  margin: 0 15%;
-}
-.left-offer {
-  background: url('/img/site/left.jpg');
-  background-position: center;
+  margin: 0 auto;
+  align-items: end;
+  background: #60cca8;
+  padding: 30px;
 }
 
+.left-offer h1:first-child {
+  color: #fff;
+  padding: 0px;
+  text-transform: uppercase;
+  line-height: 1.15;
+}
+
+.left-offer {
+  border-radius: 10px;
+}
+
+.home-offer button {
+  margin-bottom: 20px;
+  background: #7dd0e6;
+}
+.left-offer button {
+  background-color: #ff5e91;
+}
 .top-right-offer {
   background: url('/img/site/top-right.jpg');
   background-position: center;
@@ -220,9 +242,26 @@ p.btn {
 }
 .home-offer h2 {
   color: #fafafa;
+
+  padding: 10px;
 }
+.right-offer h2 {
+  background: rgba(255, 94, 145, 0.25);
+}
+.right-offer button {
+  box-shadow: 0 0 5px 3px #114e66;
+}
+
+.left-offer img {
+  width: 201px;
+  box-shadow: 0 0 18px 3px #859295;
+  border-radius: 20px;
+  border: 2px solid;
+}
+
 .overlay {
-  background-color: rgba(41, 142, 182, 0.3);
+  background-color: rgba(41, 142, 182, 0.7);
   height: 100%;
+  padding: 30px;
 }
 /*ends home page */

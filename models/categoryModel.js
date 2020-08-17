@@ -60,4 +60,13 @@ categorySchema.pre(/^find/, function (next) {
   next();
 });
 
+categorySchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'parentCategory',
+    select: '-__v',
+  });
+
+  next();
+});
+
 module.exports = Category = mongoose.model('Category', categorySchema);

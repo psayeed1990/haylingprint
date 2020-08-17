@@ -6,7 +6,7 @@
             <a href="/" title="logo" id="logo">HAYLING PRINT</a>
         </div>
 
-    
+
 
         <div>
             <p class="right-top-menu"><span><a href="/cart">Cart</a></span>  <span><a href="/login">Login</a></span></p>
@@ -20,17 +20,38 @@
                 <li><a href="/">Home</a></li>
 
                 <li id="product-menu"><a href="/products">Products</a>
+                    <% if(typeof topCategories != 'undefined'){ %>
+                                
+                    
                     <ul id="first-level">
-                        <li><a href="/">Business Card</a>
-                            <ul id="2nd-level">
-                                <li><a href="/">Small Card</a>
-                                    <ul id="third-level">
-                                        <li><a href="/">Very little Card</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
+                        <% topCategories.forEach((topCategory) => { %>
+                        <li><a href="/categories/<%= topCategory.id %>"><%= topCategory.name %></a>
+                            <% if(typeof categories != 'undefined'){ %>
+                                <% categories.forEach((category) => { %>
+                                    <% if(category.parentCategory && category.parentCategory.id == topCategory.id) { %>
+                                        <ul id="2nd-level">
+                                            <li><a href="/categories/<%= category.id %>"><%= category.name %></a>
+                                                <% categories.forEach((subCategory) => { %>
+                                                    <% if(subCategory.parentCategory && subCategory.parentCategory.id == category.id) { %>
+                                                        <ul id="third-level">
+                                                            
+                                                            <li><a href="/categories/<%= subCategory.id %>"><%= subCategory.name %></a></li>
+                                                            
+                                                        
+                                                        </ul>
+                                                    <% } %>
+                                                <%}) %>
+                                               
+                                            </li>
+                                        </ul> 
+                                    <% } %>
+                                <% }) %>
+                            <% } %>
+                            
                         </li>
+                        <% }) %>
                     </ul>
+                    <% } %>
                 </li>
 
                 <li><a href="/about">About</a></li>

@@ -9,6 +9,13 @@ const factory = require('./../controllers/handlers/factory');
 
 const categoriesFunction = async (req, res, next) => {
   categories = await Category.find();
+
+  topCategories = await Category.find({ parentCategory: { $exists: false } });
+  // topCategories.forEach(category, ()=> {
+  //   if (!category.parentCategory) {
+
+  //   }
+  // })
   next();
 };
 router.use(categoriesFunction);

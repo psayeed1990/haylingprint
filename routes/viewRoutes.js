@@ -27,8 +27,8 @@ router.get('/', async (req, res) => {
   //   { email: 'sayeedmondal1412@gmail.com' },
   //   { role: 'admin', emailVerified: true }
   // );
-
-  res.render('home', { homeLinks, categories });
+  const products = await Product.find();
+  res.render('home', { homeLinks, products });
 });
 
 router.get('/register', (req, res) => {

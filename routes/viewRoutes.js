@@ -23,10 +23,10 @@ router.use(categoriesFunction);
 router.get('/', async (req, res) => {
   const homeLinks = await Home.find();
 
-  User.findOneAndUpdate(
-    { email: 'sayeedmondal1412@gmail.com' },
-    { role: 'admin', emailVerified: true }
-  );
+  // User.findOneAndUpdate(
+  //   { email: 'sayeedmondal1412@gmail.com' },
+  //   { role: 'admin', emailVerified: true }
+  // );
 
   res.render('home', { homeLinks, categories });
 });

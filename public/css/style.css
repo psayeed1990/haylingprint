@@ -67,7 +67,7 @@ ul {
 .pure-css-nav > nav ul {
   display: grid;
   flex-wrap: wrap;
-  grid-template-columns: 10% 10% 10% 10% 10%;
+  grid-template-columns: 10% 10% 10% 13% 10% 10%;
 }
 .pure-css-nav > nav ul {
   background: transparent;

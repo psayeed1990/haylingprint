@@ -205,7 +205,7 @@ p.btn {
   display: grid;
   grid-template-columns: 60% 40%;
   margin: 0 auto;
-  align-items: end;
+  align-items: center;
 
   padding: 30px;
 }
@@ -227,6 +227,7 @@ p.btn {
 }
 .left-offer button {
   background-color: #ff5e91;
+  padding: 10px 60px;
 }
 .top-right-offer {
   background: url('/img/site/top-right.jpg');

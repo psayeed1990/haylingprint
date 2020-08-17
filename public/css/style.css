@@ -252,7 +252,9 @@ p.btn {
   background: rgba(255, 94, 145, 1);
 }
 .right-offer button {
-  box-shadow: 0 0 5px 3px #114e66;
+  box-shadow: 0 0 5px 3px #114e66, inset 0px 0px 21px #bb9a89;
+  color: #6f5d5d;
+  border: 2px solid #bb9a89;
 }
 
 .left-offer img {

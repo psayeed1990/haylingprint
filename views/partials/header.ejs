@@ -31,16 +31,7 @@
                                     <% if(category.parentCategory && category.parentCategory.id == topCategory.id) { %>
                                         <ul id="2nd-level">
                                             <li><a href="/categories/<%= category.id %>"><%= category.name %></a>
-                                                <% categories.forEach((subCategory) => { %>
-                                                    <% if(subCategory.parentCategory && subCategory.parentCategory.id == category.id) { %>
-                                                        <ul id="third-level">
-                                                            
-                                                            <li><a href="/categories/<%= subCategory.id %>"><%= subCategory.name %></a></li>
-                                                            
-                                                        
-                                                        </ul>
-                                                    <% } %>
-                                                <%}) %>
+                                                
                                                
                                             </li>
                                         </ul> 
@@ -54,9 +45,10 @@
                     <% } %>
                 </li>
 
-                <li><a href="/about">About</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="/clothing">Clothing</a></li>
+                <li><a href="/product-printing">Product Printing</a></li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
             </ul>
 
 

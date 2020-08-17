@@ -13,7 +13,7 @@ const createToken = (id) => {
 };
 
 //send JWT as cookie
-const sendToken = (user, statusCode, req, res) => {
+const sendToken = (user, statusCode, req, res, origin) => {
   const token = createToken(user._id);
 
   res.cookie('jwt', token, {
@@ -27,13 +27,14 @@ const sendToken = (user, statusCode, req, res) => {
   // Remove password from output
   user.password = undefined;
 
-  res.status(statusCode).json({
-    status: 'success',
-    token,
-    data: {
-      user,
-    },
-  });
+  // res.status(statusCode).json({
+  //   status: 'success',
+  //   token,
+  //   data: {
+  //     user,
+  //   },
+  // });
+  res.redirect(req.body.origin || '/account');
 };
 
 //sign up
@@ -155,7 +156,8 @@ exports.protect = catchAsync(async (req, res, next) => {
 
     let login_errors = {};
     login_errors.error = 'Please log in to get access';
-    return res.render('auth/login', { login_errors });
+    origin = req.originalUrl;
+    return res.render('auth/login', { origin, login_errors });
   }
 
   // 2) Verification token
@@ -164,17 +166,18 @@ exports.protect = catchAsync(async (req, res, next) => {
   // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
-    return next(
-      new AppError(
-        'The user belonging to this token does no longer exist.',
-        401
-      )
-    );
+    let login_errors = {};
+    login_errors.error = 'User does not exist. Please register';
+
+    return res.render('auth/register', { login_errors });
   }
 
   // 4) Check if user changed password after the token was issued
   if (currentUser.changedPasswordAfter(decoded.iat)) {
-    res.send('User recently changed password! Please log in again.');
+    let login_errors = {};
+    login_errors.error = 'You are using a old password.';
+    origin = req.originalUrl;
+    return res.render('auth/login', { origin, login_errors });
   }
 
   // GRANT ACCESS TO PROTECTED ROUTE

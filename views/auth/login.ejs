@@ -2,6 +2,7 @@
 <div id="login">
     <form class="form" id="login-form" action="/api/v1/users/login" method="POST">
         <%- include("./../partials/error_messages") %>
+        <input type="hidden" name="origin" placeholder="origin" value="<%= typeof origin != 'undefined' ? origin : '' %>" />
         <input type="email" name="email" placeholder="Email" value="<%= typeof email != 'undefined' ? email : '' %>" />
         <input type="password" name="password" placeholder="Password"
             value="<%= typeof password != 'undefined' ? password : '' %>" />

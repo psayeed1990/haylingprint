@@ -224,10 +224,12 @@ p.btn {
 .home-offer button {
   margin-bottom: 20px;
   background: #7dd0e6;
+  opacity: 0.7;
 }
 .left-offer button {
   background-color: #ff5e91;
   padding: 10px 60px;
+  cursor: pointer;
 }
 .top-right-offer {
   background: url('/img/site/top-right.jpg');
@@ -245,6 +247,7 @@ p.btn {
 .home-offer h2 {
   text-transform: uppercase;
   color: #fafafa;
+  opacity: 0.8;
 
   padding: 10px;
 }

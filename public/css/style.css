@@ -200,12 +200,12 @@ p.btn {
   font-family: 'roboto';
 }
 
-.home-offer {
+.home-overlay {
   display: grid;
   grid-template-columns: 60% 40%;
   margin: 0 auto;
   align-items: end;
-  background: #60cca8;
+
   padding: 30px;
 }
 
@@ -259,9 +259,19 @@ p.btn {
   border: 2px solid;
 }
 
+.home-offer {
+  background: url('/img/site/left-photo-2.jpg');
+  background-position: center;
+}
+
 .overlay {
   background-color: rgba(41, 142, 182, 0.7);
   height: 100%;
   padding: 30px;
+}
+
+.home-overlay {
+  background-color: rgba(96, 204, 168, 0.7);
+  height: 100%;
 }
 /*ends home page */

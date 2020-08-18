@@ -1,0 +1,61 @@
+<header>
+    <div>
+        <nav class="top-nav">
+            <div>
+                <a href="/" title="logo" id="logo">HAYLING PRINT</a>
+            </div>
+
+
+
+            <div>
+
+
+
+                <p class="right-top-menu">
+                    <span><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i>
+                            Cart</a></span>
+                    <% if(typeof user != 'undefined'){ %>
+                    <span><a href="/account"><i class="fa fa-users" aria-hidden="true"></i>
+                            Account</a></span>
+                    <%}%>
+                <% if(typeof user == 'undefined'){ %>
+                    <span><a href="/login">Login</a></span>
+                    <%}%>
+            </p>
+        </div>
+
+    </nav>
+    <div class="main-menu pure-css-nav">
+        <nav>
+
+            <ul>
+            
+                <li><a href="/admin">Dashboard</a></li>
+
+                <li id="product-menu"><a href="/admin/products">Products</a>
+                    <ul id="2nd-level">
+                        <li><a href="/admin/add-product">Add Product</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="/clothing">Category</a>
+                    <ul id="2nd-level">
+                        <li><a href="/admin/add-category/">Add Category</a></li>
+                            
+                     </ul>
+                    
+                </li>
+                <li><a href="/product-printing">Orders</a>
+
+                </li>
+                <li><a href="/about">About Us</a></li>
+                <li><a href="/contact">Contact Us</a></li>
+            </ul>
+
+
+        </nav>
+    </div>
+
+</div>
+
+</header>

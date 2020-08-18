@@ -1,0 +1,36 @@
+<div class="page">
+    <div class="product-admin">
+
+ 
+<% if (typeof doc == 'undefined') { %>
+    <p>hi</p>
+<% } %>
+
+
+ 
+ <% if (typeof doc != 'undefined') { %>
+            <% let counter = 1 %>
+        <% doc.forEach((product) => { %>
+
+                    <div class="single-product">
+                        <p><%= counter %></p>
+                        <img src="/img/products/<%= product.imageCover %>" width="50">
+                        <p><a href="/products/<%= product.id%>"><%= product.name %></a></p>
+
+                        <p>cat: <a href="/categories/<%= product.category.id %>"><%= product.category.name %></a></p>
+                        
+                        
+                        
+                        <p>Stock Left: <%= product.stock %></p>
+                
+                    </div>
+                    <% counter +=1 %>
+                <% }) %>
+
+                
+
+
+<% } %>
+
+</div>
+</div>

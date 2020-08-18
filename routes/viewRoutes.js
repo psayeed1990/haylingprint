@@ -5,8 +5,10 @@ const Product = require('./../models/productModel');
 const Home = require('./../models/homePageModel');
 const authController = require('./../controllers/authController');
 const adminController = require('./../controllers/adminController');
-const factory = require('./../controllers/handlers/factory');
+const APIFeatures = require('./../utils/apiFeatures');
+const productController = require('./../controllers/productController');
 const User = require('./../models/userModel');
+const { route } = require('./userRoutes');
 
 router.use(authController.isLoggedIn);
 
@@ -52,7 +54,21 @@ router.get('/account', authController.protect, (req, res) => {
   res.render('user/account');
 });
 
-//product
+//product get all
+router.get('/products/', async (req, res) => {
+  let filter = {};
+  if (req.params.productId) filter = { tour: req.params.productId };
+
+  const features = new APIFeatures(Product.find(filter), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  // const doc = await features.query.explain();
+  const doc = await features.query;
+
+  res.render('products', { doc });
+});
 router.get('/products/:id', async (req, res) => {
   const id = req.params.id;
   const product = await Product.findById(id);
@@ -67,27 +83,44 @@ router.get('/categories/:id', async (req, res) => {
 
 //admin only
 //for admin only
+
 router.use(authController.protect, authController.restrictTo('admin'));
+
+//dashboard
+router.get('/admin', async (req, res) => {
+  res.render('admin/dashboard', { layout: 'layoutAdmin' });
+});
+
+router.get('/admin/products', async (req, res) => {
+  let filter = {};
+  if (req.params.productId) filter = { tour: req.params.productId };
+
+  const features = new APIFeatures(Product.find(filter), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  // const doc = await features.query.explain();
+  const doc = await features.query;
+  res.render('admin/products', { layout: 'layoutAdmin', doc });
+});
+
+router.get('/admin/products/:id', (req, res) => {});
 
 router.get('/admin/add-product', async (req, res) => {
   //const categories = await Category.find();
-  res.render('addProduct');
+  res.render('addProduct', { layout: 'layoutAdmin' });
 });
 
 router.get('/admin/add-category', async (req, res) => {
   //const categories = await Category.find();
-  res.render('addCategory');
-});
-
-//dashboard
-router.get('/admin', async (req, res) => {
-  res.render('admin/dashboard');
+  res.render('addCategory', { layout: 'layoutAdmin' });
 });
 
 router.get('/admin/home', async (req, res) => {
   const homes = await Home.find();
   const url = `${req.protocol}://${req.get('host')}`;
-  res.render('admin/adminHome', { homes, url });
+  res.render('admin/adminHome', { layout: 'layoutAdmin', homes, url });
 });
 
 router.post('/admin/home', async (req, res) => {
@@ -101,7 +134,7 @@ router.post('/admin/home', async (req, res) => {
     //write error message here
     const homes = await Home.find();
     const url = `${req.protocol}://${req.get('host')}`;
-    return res.render('admin/adminHome', { homes, url });
+    return res.render('admin/adminHome', { layout: 'layoutAdmin', homes, url });
   }
 
   const newLink = await Home.create({ link });
@@ -111,7 +144,7 @@ router.post('/admin/home', async (req, res) => {
 
 router.get('/admin/home/:id', async (req, res) => {
   const home = await Home.findById(req.params.id);
-  res.render('admin/singleHomeLink', { home });
+  res.render('admin/singleHomeLink', { layout: 'layoutAdmin', home });
 });
 
 router.post('/admin/home/update/:id', async (req, res) => {

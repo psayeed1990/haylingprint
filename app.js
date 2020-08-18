@@ -28,6 +28,7 @@ app.options('*', cors());
 //view setup
 app.use(expressLayout);
 app.set('view engine', 'ejs');
+app.set('layout', 'layout');
 
 //set public folder
 app.use(express.static(path.join(__dirname, 'public')));

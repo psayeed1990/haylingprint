@@ -36,7 +36,7 @@ router
     authController.protect,
     authController.restrictTo('admin'),
     productController.uploadProductImages,
-    //productController.resizeProductImages,
+    productController.resizeProductImages,
     productController.updateProduct
   )
   .delete(

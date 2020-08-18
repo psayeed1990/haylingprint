@@ -1,6 +1,6 @@
 
 <div class="page">
-    <div>
+    <div class="single-product-admin">
 <% if (typeof product == 'undefined') { %>
 <p>No product found</p>
 <% } %>
@@ -14,6 +14,11 @@
         <form method="POST" action="/admin/products/<%= product.id %>" enctype="multipart/form-data">
 
             <%- include("./../partials/error_messages") %>
+
+            <img src="/img/products/<%= product.imageCover %>" width="200">
+            <input type="hidden" name="oldCover" value="<%= product.imageCover %>">
+            <label id="deleteableLabel" for="imageCover">Change image:</label>
+            <input id="imageCover" name="imageCover" type="file" />
             <label>Product Name: </label>
             <input type="text" name="name" placeholder="Product Name"
                 value="<%= product.name %>" />
@@ -38,14 +43,12 @@
             <textarea name="description" placeholder="Description" ><%= product.description %></textarea>
             
             
-            
+            <label>Stock Left: </label>
             <input id="deleteableStock" type="text" name="stock" placeholder="Left in Stock"
                 value="<%= product.stock %>" />
             
-                <img src="/img/products/<%= product.imageCover %>" width="300">
-                
-            <label id="deleteableLabel" for="imageCover">Change image:</label>
-            <input id="imageCover" name="imageCover" type="file" />
+               
+            
             
             <label>SKU: </label>
             <input type="text" name="SKU" placeholder="SKU" required value="<%= product.SKU %>" />
@@ -55,8 +58,36 @@
             <input type="submit" value="Update Product">
         </form>
     
-      
+    <div id="delete-btn">delete </div>
+        <div id="answer">
+            <form method="POST" action="/admin/products/delete/<%= product.id %>">
+                <input type="submit" id="yes" value="yes">
+            </form>
+            
+            <p id="no">no</p>
+        </div>
+    
+        <script>
+            let answer = document.getElementById('answer');
+            let yes = document.getElementById('yes');
+            let no = document.getElementById('no');
+            let deleteBtn = document.getElementById('delete-btn')
 
+            answer.style.display = 'none';
+
+            deleteBtn.addEventListener('click', deleteFunction);
+            no.addEventListener('click', deleteFunction);
+
+            function deleteFunction(e){
+                e.preventDefault();
+                if(answer.style.display === 'none') {
+                    answer.style.display = 'block';
+                }
+                else{
+                    answer.style.display = 'none';
+                }
+            }
+        </script>
 </div>
 
 

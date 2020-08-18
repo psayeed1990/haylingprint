@@ -9,7 +9,9 @@ exports.deleteOne = (Model) =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-
+    if (Model == Product) {
+      return res.redirect('/admin/products');
+    }
     res.status(204).json({
       status: 'success',
       data: null,
@@ -26,13 +28,13 @@ exports.updateOne = (Model) =>
     if (!doc) {
       return next(new AppError('No document found with that ID', 404));
     }
-
-    res.status(200).json({
-      status: 'success',
-      data: {
-        data: doc,
-      },
-    });
+    console.log(Model == Product);
+    if (Model == Product) {
+      return res.render('admin/singleProduct', {
+        layout: 'layoutAdmin',
+        product: doc,
+      });
+    }
   });
 
 exports.createOne = (Model) =>

@@ -111,10 +111,18 @@ router.get('/admin/products/:id', async (req, res) => {
   res.render('admin/singleProduct', { product });
 });
 
+router.post(
+  '/admin/products/:id',
+  productController.uploadProductImages,
+  productController.resizeProductImages,
+  productController.updateProduct
+);
 router.get('/admin/add-product', async (req, res) => {
   //const categories = await Category.find();
   res.render('addProduct', { layout: 'layoutAdmin' });
 });
+
+router.post('/admin/products/delete/:id', productController.deleteProduct);
 
 router.get('/admin/add-category', async (req, res) => {
   //const categories = await Category.find();
@@ -149,16 +157,6 @@ router.post('/admin/home', async (req, res) => {
 router.get('/admin/home/:id', async (req, res) => {
   const home = await Home.findById(req.params.id);
   res.render('admin/singleHomeLink', { layout: 'layoutAdmin', home });
-});
-
-router.post('/admin/home/update/:id', async (req, res) => {
-  const id = req.params.id;
-  console.log(req.body);
-  const doc = await Home.findByIdAndUpdate(id, req.body, {
-    new: true,
-    runValidators: true,
-  });
-  res.redirect('/admin/home');
 });
 
 router.post('/admin/home/delete/:id', async (req, res) => {

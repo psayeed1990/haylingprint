@@ -66,7 +66,14 @@ exports.resizeProductImages = catchAsync(async (req, res, next) => {
   //     req.body.images.push(filename);
   //   })
   // );
-  req.body.imageCover = req.file.filename;
+  if (!req.file) {
+    console.log('WHat???');
+    req.body.imageCover = req.body.oldCover;
+  }
+  if (req.file) {
+    req.body.imageCover = req.file.filename;
+  }
+
   next();
 });
 

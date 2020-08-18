@@ -299,6 +299,7 @@ p.btn {
   display: grid;
   grid-template-columns: 23% 23% 23% 23%;
   grid-gap: 3%;
+  padding: 0 35px;
 }
 
 .home-heading h1 {

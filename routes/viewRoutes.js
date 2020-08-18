@@ -78,7 +78,14 @@ router.get('/products/:id', async (req, res) => {
 router.get('/categories/:id', async (req, res) => {
   const id = req.params.id;
   const category = await Category.findById(id);
-  res.render('singleCategory', { category });
+
+  if (category) {
+    return res.render('singleCategory', { category });
+  }
+  if (!category) {
+    const category = { name: 'Not found' };
+    return res.render('singleCategory', { category });
+  }
 });
 
 //admin only

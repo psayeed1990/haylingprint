@@ -297,8 +297,8 @@ p.btn {
 
 .home-text-section {
   display: grid;
-  grid-template-columns: 20% 20% 20% 20%;
-  grid-gap: 7%;
+  grid-template-columns: 23% 23% 23% 23%;
+  grid-gap: 3%;
 }
 
 .home-heading h1 {

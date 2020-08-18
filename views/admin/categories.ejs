@@ -1,0 +1,10 @@
+<% if (typeof categories != 'undefined') { %>
+<% let counter = 1 %>
+<% categories.forEach((category) => { %>
+
+<div id="category-admin">
+    <p>Catery Name: <%=category.name %></p>
+</div>
+
+<% }) %>
+<% } %>

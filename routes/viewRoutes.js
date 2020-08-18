@@ -135,6 +135,10 @@ router.get('/admin/add-category', async (req, res) => {
   //const categories = await Category.find();
   res.render('addCategory', { layout: 'layoutAdmin' });
 });
+router.get('/admin/categories', async (req, res) => {
+  //const categories = await Category.find();
+  res.render('admin/categories', { layout: 'layoutAdmin' });
+});
 
 router.get('/admin/home', async (req, res) => {
   const homes = await Home.find();

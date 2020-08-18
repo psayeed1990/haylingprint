@@ -1,32 +1,63 @@
 
 <div class="page">
     <div>
-<% if (typeof doc == 'undefined') { %>
+<% if (typeof product == 'undefined') { %>
 <p>No product found</p>
 <% } %>
 
 
 
-<% if (typeof doc != 'undefined') { %>
-
-<% doc.forEach((product) => { %>
+<% if (typeof product != 'undefined') { %>
 
 <div class="single-product">
-    <a href="/products/<%= product.id%>">
-        <p>Titlle: <%= product.name %></p>
-    </a>
 
-    <a href="/categories/<%= product.category.id %>">
-        <p>Category: <%= product.category.name %></p>
-    </a>
-    <p>Description: <%= product.description %></p>
-    <img src="/img/products/<%= product.imageCover %>" width="200">
-    <p>Price: <%= product.price %></p>
-    <p>Stock Left: <%= product.stock %></p>
+        <form method="POST" action="/admin/products/<%= product.id %>" enctype="multipart/form-data">
+
+            <%- include("./../partials/error_messages") %>
+            <label>Product Name: </label>
+            <input type="text" name="name" placeholder="Product Name"
+                value="<%= product.name %>" />
+            
+                <label>Category: <%= product.category.name %></label>
+            <% if(typeof categories != 'undefined'){ %>
+            <select name="category" id="reservedtable">
+                <option selected disabled>Change Category:</option>
+                <% categories.forEach((category) => { %>
+            
+            
+                <option value="<%= category.id %>"><%= category.name %></option>
+            
+            
+                <% }) %>
+            
+            </select>
+            <% } %>
+
+            
+            <label>Product Description: </label>
+            <textarea name="description" placeholder="Description" ><%= product.description %></textarea>
+            
+            
+            
+            <input id="deleteableStock" type="text" name="stock" placeholder="Left in Stock"
+                value="<%= product.stock %>" />
+            
+                <img src="/img/products/<%= product.imageCover %>" width="300">
+                
+            <label id="deleteableLabel" for="imageCover">Change image:</label>
+            <input id="imageCover" name="imageCover" type="file" />
+            
+            <label>SKU: </label>
+            <input type="text" name="SKU" placeholder="SKU" required value="<%= product.SKU %>" />
+            <label>Price: </label>
+            <input id="deleteablePrice" type="text" name="price" placeholder="Price"
+                value="<%= product.price %>" />
+            <input type="submit" value="Update Product">
+        </form>
+    
+      
 
 </div>
-
-<% }) %>
 
 
 <% } %>

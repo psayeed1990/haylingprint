@@ -203,6 +203,7 @@ p.btn {
 
 .product-admin .single-product p {
   padding: 10px;
+  border-right: 1px solid #eee;
 }
 /*ends admin*/
 

@@ -11,19 +11,18 @@
  <% if (typeof doc != 'undefined') { %>
             <% let counter = 1 %>
         <% doc.forEach((product) => { %>
-
+                    <a href="/admin/products/<%= product.id%>">
                     <div class="single-product">
                         <p><%= counter %></p>
                         <img src="/img/products/<%= product.imageCover %>" width="50">
-                        <p><a href="/products/<%= product.id%>"><%= product.name %></a></p>
+                        <p><%= product.name %></p>
 
-                        <p>cat: <a href="/categories/<%= product.category.id %>"><%= product.category.name %></a></p>
-                        
-                        
-                        
+                        <p>cat: <%= product.category.name %></p>
+                     
                         <p>Stock Left: <%= product.stock %></p>
                 
                     </div>
+                    </a>
                     <% counter +=1 %>
                 <% }) %>
 

@@ -105,7 +105,11 @@ router.get('/admin/products', async (req, res) => {
   res.render('admin/products', { layout: 'layoutAdmin', doc });
 });
 
-router.get('/admin/products/:id', (req, res) => {});
+router.get('/admin/products/:id', async (req, res) => {
+  const product = await Product.findById(req.params.id);
+
+  res.render('admin/singleProduct', { product });
+});
 
 router.get('/admin/add-product', async (req, res) => {
   //const categories = await Category.find();

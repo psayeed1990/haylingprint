@@ -297,8 +297,8 @@ p.btn {
 
 .home-text-section {
   display: grid;
-  grid-template-columns: 30% 30% 30%;
-  grid-gap: 5%;
+  grid-template-columns: 20% 20% 20% 20%;
+  grid-gap: 7%;
 }
 
 .home-heading h1 {
@@ -306,11 +306,10 @@ p.btn {
   text-transform: uppercase;
   width: max-content;
   margin: 100px auto 0;
-  color: #60cca8;
 }
 .text1 {
-  margin: 50px;
-  padding: 30px;
+  margin: 20px;
+  padding: 20px;
   /* border: 1px solid; */
 }
 .text1 button {

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const localstorage = require('node-localstorage');
 const Category = require('./../models/categoryModel');
 const Product = require('./../models/productModel');
 const Home = require('./../models/homePageModel');
@@ -7,6 +8,7 @@ const authController = require('./../controllers/authController');
 const adminController = require('./../controllers/adminController');
 const APIFeatures = require('./../utils/apiFeatures');
 const productController = require('./../controllers/productController');
+const Cart = require('./../models/cartModel');
 const User = require('./../models/userModel');
 const { route } = require('./userRoutes');
 
@@ -43,7 +45,8 @@ router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
-router.get('/cart', (req, res) => {
+router.get('/cart', async (req, res) => {
+  //catch localstorage
   res.render('cart');
 });
 router.get('/about', (req, res) => {

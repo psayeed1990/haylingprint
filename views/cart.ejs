@@ -1,1 +1,32 @@
-<h1>This is a cart</h1>
+<div class="page">
+    <div id="cart-page">
+    <div id="cart">
+
+    </div>
+
+    <button class="add-cart">Checkout Your Cart</button>
+</div>
+    <script>
+
+        function alStorage() {
+
+                var cartValues = [],
+                    cartCount = 0,
+                    keys = Object.keys(localStorage),
+                    i = keys.length;
+
+                while (i--) {
+                    cartValues.push(JSON.parse(localStorage.getItem(keys[i])));
+                }
+
+                for (var j = 0; j < cartValues.length; j++) {
+                    cartCount += Number(cartValues[j].quantity);
+
+                   
+                        document.getElementById('cart').innerHTML += `<div class="cart-product"><a href="/products/${cartValues[j].id}">${cartValues[j].name}</a><p>Quantity: ${cartValues[j].quantity}</p><p>Price: ${cartValues[j].price}</p><p>Total: ${Number(cartValues[j].price) * Number(cartValues[j].quantity)}</p></div>`
+                    
+                }
+            }
+            alStorage();
+    </script>
+</div>

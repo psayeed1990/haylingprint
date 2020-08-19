@@ -73,23 +73,31 @@
     <a href="/admin/add-category">Click to add a new category (Only by a admin, temporary on home page)</a>
 
             <% if(typeof products != 'undefined'){ %>
-            
+            <div id="product-front">
                 <% products.forEach((product) => { %>
             
                 <div class="single-product">
-                <a href="/products/<%= product.id%>"><p>Titlle: <%= product.name %></p></a>
+                    <img src="/img/products/<%= product.imageCover %>" width="100%">
+                    <a href="/products/<%= product.id%>">
+                        <h3><%= product.name %></h2>
+                    </a>
                 
-                <a href="/categories/<%= product.category.id %>"><p>Category: <%= product.category.name %></p></a>
-                <p>Description: <%= product.description %></p>
-                <img src="/img/products/<%= product.imageCover %>" width="200">
-                <p>Price: <%= product.price %></p>
-                <p>Stock Left: <%= product.stock %></p>
+                    <!-- <a href="/categories/<%= product.category.id %>">
+                                <p>Category: <%= product.category.name %></p>
+                            </a> -->
+                    <p> <%= product.description %></p>
+                
+                    <p>Price: <%= product.price %></p>
+                    <p>Stock Left: <%= product.stock %></p>
+                
+                    <a href="/products/<%= product.id%>"><button id="add-cart" class="add-cart">Buy Now</button></a>
+                
                 
                 </div>
             
                 <% }) %>
             
-          
+            </div>
             <% } %>
             </div>
 </div>

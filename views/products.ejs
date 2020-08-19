@@ -13,18 +13,22 @@
         <% doc.forEach((product) => { %>
 
         <div class="single-product">
+            <img src="/img/products/<%= product.imageCover %>" width="100%">
             <a href="/products/<%= product.id%>">
-                <p>Titlle: <%= product.name %></p>
+                <h3><%= product.name %></h2>
             </a>
 
-            <a href="/categories/<%= product.category.id %>">
+            <!-- <a href="/categories/<%= product.category.id %>">
                 <p>Category: <%= product.category.name %></p>
-            </a>
-            <p>Description: <%= product.description %></p>
-            <img src="/img/products/<%= product.imageCover %>" width="200">
+            </a> -->
+            <p> <%= product.description %></p>
+            
             <p>Price: <%= product.price %></p>
             <p>Stock Left: <%= product.stock %></p>
-
+            
+            <a href="/products/<%= product.id%>"><button id="add-cart" class="add-cart">Buy Now</button></a>
+ 
+            
         </div>
 
         <% }) %>
@@ -33,4 +37,5 @@
         <% } %>
 
     </div>
+            
 </div>

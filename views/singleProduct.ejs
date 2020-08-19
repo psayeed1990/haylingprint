@@ -2,8 +2,59 @@
     <% if(typeof product != 'undefined'){ %>
     
     
-    <p><%= product.name %></p>
-        
+    <div class="single-product-page">
+        <img src="/img/products/<%= product.imageCover %>" width="300">
+        <a href="/products/<%= product.id%>">
+            <h3><%= product.name %></h2>
+        </a>
+    
+        <!-- <a href="/categories/<%= product.category.id %>">
+                    <p>Category: <%= product.category.name %></p>
+                </a> -->
+        <p> <%= product.description %></p>
+    
+        <p>Price: <%= product.price %></p>
+        <p>Stock Left: <%= product.stock %></p>
+    
+        <form onsubmit="event.preventDefault(); addToCart()">
+            <label style="display: inline;">Quantity: </label> <input id="quantity" name="quantity" type="number"
+                style="width: 40px; display: inline;" max="<%= product.stock %>" min="1" required>
+            <input type="hidden" id="product-id" name="productId" value="<%= product.id%>">
+            <input type="hidden" id="product-price" name="productPrice" value="<%= product.price%>">
+            <input type="hidden" id="product-name" name="productName" value="<%= product.name%>">
+            <input type="submit" id="add-cart" class="add-cart" value="Add to cart">
+        </form>
+    
+    
+    </div>
+        <script>
+            let productId = document.getElementById('product-id').value;
+            let productName = document.getElementById('product-name').value;
+            let productPrice= document.getElementById('product-price').value;
+
+            function addToCart() {
+                
+                if (this.quantity.value >= 1 && this.quantity.value <= this.quantity.max) {
+
+                    let dataArray = {id: productId, name: productName, price: productPrice, quantity: this.quantity.value};
+                    
+                    // let localValue = parseInt(localStorage.getItem(productId), 10);
+                    
+                    // if(localValue !== NaN){
+                    //     let addtToLocalValue = this.quantity.value + localValue;
+                    //     console.log(addtToLocalValue);
+                    //     localStorage.setItem(productId.toString(), addtToLocalValue.toString());
+                    // }
+                    
+
+                    localStorage.setItem(productId.toString(), JSON.stringify(dataArray));
+                    
+                        allStorage();
+                }
+            }
+        </script>
         
     <% } %>
 </div>
+
+

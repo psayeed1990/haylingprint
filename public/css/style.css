@@ -370,9 +370,38 @@ p.btn {
 
 /*product page front */
 
-#product-front {
-  display: grid;
-  grid-template-columns: 15% 15% 15% 15% 15%;
+.add-cart {
+  background: #ff5e91;
+  font-size: 0.8em;
+  cursor: pointer;
 }
 
+#product-front {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%;
+  grid-gap: 6%;
+  margin-top: 50px;
+}
+
+.single-product-page img {
+  box-shadow: inset 0 0 4px 0px #333;
+  border: 1px solid #e6a47d;
+  padding: 3px;
+  margin-top: 27px;
+}
+#cart-count {
+  color: #ff5e91;
+}
+.cart-product {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%;
+  padding: 30px;
+  margin: 30px;
+  border: 1px solid #e7e7e7;
+  box-shadow: 0 0px 2px 0px #ccc;
+}
+
+#cart-page {
+  padding: 30px;
+}
 /*product page front */

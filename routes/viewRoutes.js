@@ -83,7 +83,8 @@ router.get('/categories/:id', async (req, res) => {
   const category = await Category.findById(id);
 
   if (category) {
-    return res.render('singleCategory', { category });
+    const products = await Product.find({ category: category.id });
+    return res.render('singleCategory', { category, products });
   }
   if (!category) {
     const category = { name: 'Not found' };

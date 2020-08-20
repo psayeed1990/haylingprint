@@ -135,6 +135,31 @@ router.get('/admin/add-product', async (req, res) => {
 
 router.post('/admin/products/delete/:id', productController.deleteProduct);
 
+//variants
+
+router.get('/admin/add-variants', (req, res) => {
+  res.render('admin/addVariant', { layout: 'layoutAdmin' });
+});
+
+router.post('/admin/add-variants', async (req, res) => {
+  const product = await Product.findOneAndUpdate(
+    { SKU: req.body.product },
+    {
+      $push: {
+        variants: {
+          base: req.body.base,
+          name: req.body.name,
+          value: req.body.value,
+          SKU: req.body.SKU,
+        },
+      },
+    }
+  );
+  if (product) {
+    return res.redirect(`/admin/products/${product.id}`);
+  }
+});
+
 router.get('/admin/add-category', async (req, res) => {
   //const categories = await Category.find();
   res.render('addCategory', { layout: 'layoutAdmin' });

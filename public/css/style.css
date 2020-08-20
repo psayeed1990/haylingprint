@@ -160,13 +160,11 @@ p.btn {
 .variableProductsForm {
   display: grid;
   grid-template-columns: auto auto;
-}
-
-.variableProductsForm div {
-  margin: 30px;
-  padding: 30px;
-  background-color: #fafafa;
-  border: 1px solid #eee;
+  width: 70%;
+  margin: 0px auto 30px;
+  background: #ededed;
+  padding: 20px;
+  border: 1px solid #ccc;
 }
 
 /*ends product*/

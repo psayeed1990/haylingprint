@@ -16,6 +16,7 @@ const productSchema = new Schema(
       ref: 'Category',
       required: [true, 'Category is required'],
     },
+
     originalPrice: {
       type: Number,
       trim: true,
@@ -81,12 +82,7 @@ const productSchema = new Schema(
       ref: 'Home',
     },
 
-    variants: [
-      {
-        type: mongoose.Schema.ObjectId,
-        ref: 'Product',
-      },
-    ],
+    variants: [],
 
     createdAt: {
       type: Date,

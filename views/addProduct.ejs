@@ -34,12 +34,16 @@
             <input id="deleteablePrice" type="text" name="price" placeholder="Price" required value="<%= typeof price != 'undefined' ? price : '' %>" />
 
             <!--Variable html code-->
+            <p style="margin-top: 15px;">Must fill below if product has variants</p>
             <div id="variableProductsForm" class="variableProductsForm">
 
-
+            <input type="text" name="variantsName" placeholder="Variant Name">
+            <input type="text" name="variantsValue" placeholder="Variant Value">
             </div>
 
-            <p class="btn add-variable-btn" id="add-variable-btn">Add a variable</p>
+            
+
+            
 
             <input type="submit" value="Add New Product" />
 
@@ -47,51 +51,6 @@
         </form>
     </div>
 
-<script>
-    /*
-    let counter = 0;
-    let addVariableBtns= document.querySelectorAll('.add-variable-btn');
-    console.log(addVariableBtns);
-    for (var i = 0; i < addVariableBtns.length; i ++){
-        addVariableBtns[i].addEventListener('click', createVariable);
-    }
 
-    function createVariable(e){
-        e.preventDefault();
-        let variableProductsForm = this.parentNode.querySelector('.variableProductsForm');
-        variableProductsForm.innerHTML = '<input type="text" name="variantSKU" placeholder="SKU" required /><input type="text" name="variantName" placeholder="Variable name" required /><input type="text" name="variantValue" placeholder="Variable" required /><input type="text" name="variantStock" placeholder="Left in Stock" required /><label for="ad-table-img">Choose a image:</label><input name="variantImageCover" type="file" required /><input type="text" name="variantPrice" placeholder="Price" required /><div class="variableWrapper"><div id="variableProductsForm" class="variableProductsForm"></div><p class="btn add-variable-btn" id="add-variable-btn">Add a variable</p></div>'
-    }
-
-    let variableProductsForm = document.getElementById('variableProductsForm');
-    let isVariable = false;
-    //let addVariableBtn = document.getElementById('add-variable-btn');
-    let variantForm = '<input type="text" name="variantSKU_' + counter + '" placeholder="SKU" required /><input type="text" name="variantName_' + counter + '" placeholder="Variable name" required /><input type="text" name="variantValue_' + counter + '" placeholder="Variable" required /><input type="text" name="variantStock_' + counter + '" placeholder="Left in Stock" required /><label for="ad-table-img">Choose a image:</label><input name="variantImageCover_' + counter + '" type="file" required /><input type="text" name="variantPrice_' + counter + '" placeholder="Price" required /><div class="variableWrapper"><div id="variableProductsForm_' + counter + '" class="variableProductsForm"></div><p class="btn add-variable-btn" id="add-variable-btn_' + counter + '">Add a variable</p></div>'
-
-    addVariableBtn.addEventListener('click', createVariable);
-    
-    function createVariable(e){
-
-        e.preventDefault();
-
-        if (!isVariable) {
-            document.getElementById('deleteableImg').style.display = 'none';
-            document.getElementById('deleteableLabel').style.display = 'none'
-            document.getElementById('deleteableStock').style.display = 'none'
-            document.getElementById('deleteablePrice').style.display = 'none'
-
-            variableProductsForm.innerHTML += '<div>' + '1 <br>' + variantForm + '</div>';
-          
-            variableProductsForm.innerHTML += '<div>' + '2 <br>' + variantForm + '</div>';
- 
-            isVariable = true;
-        }else{
-            
-            variableProductsForm.innerHTML += '<div>' + counter + '<br>' + variantForm + '</div>';
-            counter += 1;
-        }
-
-    }*/
-
-</script>
 
 </div>

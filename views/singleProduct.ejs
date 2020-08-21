@@ -22,6 +22,15 @@
                     </div>
                 <% } %>
                 
+
+                <div id="variable-form">
+
+                    <label id="base-name" style="font-weight: bold;">
+                        
+                    </label>
+
+                </div>
+
     
         <p>Price: <%= product.price %></p>
         <p>Stock Left: <%= product.stock %></p>
@@ -43,8 +52,16 @@
         
         
         if (document.getElementById('variants')){
-            let variants = document.getElementById('variants').innerHTML;
-            console.log(JSON.parse(variants))
+            let variants = JSON.parse(document.getElementById('variants').innerHTML);
+            let variableForm = document.getElementById('variable-form');
+            let baseName = document.getElementById('base-name');
+            
+            for(var i = 0; i < variants.length; i++){
+                if(variants[i].base === null || variants[i].base === ""){
+                    baseName.innerHTML = variants[i].name + ": " ;
+                    variableForm.innerHTML += `<input style="width: 40px; display: inline;" type="radio" name="variableName" value="${variants[i].value}"><label style="width: 40px; display: inline;">${variants[i].value}</label>`;
+                }
+            }
         }
 
         //ends code for product variable

@@ -8,10 +8,20 @@
             <h3><%= product.name %></h2>
         </a>
     
-        <!-- <a href="/categories/<%= product.category.id %>">
+        <a href="/categories/<%= product.category.id %>">
                     <p>Category: <%= product.category.name %></p>
-                </a> -->
+                </a>
         <p> <%= product.description %></p>
+
+
+
+                <!-- variable codes -->
+                <% if(product.variants.length >= 0){ %>
+                    <div id="variants" style="display: none;">
+                    <%= JSON.stringify(product.variants) %>
+                    </div>
+                <% } %>
+                
     
         <p>Price: <%= product.price %></p>
         <p>Stock Left: <%= product.stock %></p>
@@ -28,6 +38,18 @@
     
     </div>
         <script>
+
+        //starts code for product variable
+        
+        
+        if (document.getElementById('variants')){
+            let variants = document.getElementById('variants').innerHTML;
+            console.log(JSON.parse(variants))
+        }
+
+        //ends code for product variable
+
+
             let productId = document.getElementById('product-id').value;
             let productName = document.getElementById('product-name').value;
             let productPrice= document.getElementById('product-price').value;
@@ -52,6 +74,9 @@
                         allStorage();
                 }
             }
+
+
+            
         </script>
         
     <% } %>

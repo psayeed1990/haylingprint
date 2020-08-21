@@ -57,18 +57,11 @@
                 value="<%= product.price %>" />
 
 
-                            <!--Variable html code-->
-                            <div id="variableProductsForm" class="variableProductsForm">
-                            
-                            
-                            </div>
-                            
-                            <p class="btn add-variable-btn" id="add-variable-btn">Add a variable</p>
-
             <input type="submit" value="Update Product">
         </form>
     
-    <div id="delete-btn">delete </div>
+    <div id="delete-btn">delete product </div>
+    <div class="del-wrapper">
         <div id="answer">
             <form method="POST" action="/admin/products/delete/<%= product.id %>">
                 <input type="submit" id="yes" value="yes">
@@ -76,6 +69,7 @@
             
             <p id="no">no</p>
         </div>
+    </div>
     
         <script>
             let answer = document.getElementById('answer');
@@ -98,7 +92,26 @@
                 }
             }
         </script>
+
+
+<!--Product variables-->
+<% if(product.variants.length >= 0){ %>
+<h2>Product Variants</h2>
+<% for(var i = 0; i< product.variants.length; i++){ %>
+    <div class="varints-admin-show">
+        <p><%=(product.variants[i].name) %>: <%=(product.variants[i].value) %></p>
+        <p>SKU: <%=(product.variants[i].SKU) %></p>
+        <p>Price: <%=(product.variants[i].price) %></p>
+        <p>Parent SKU: <%=(product.variants[i].base) %></p>
+    </div>
+<% } %>
+<% } %>
+
+
+
+
 </div>
+
 
 
 <% } %>

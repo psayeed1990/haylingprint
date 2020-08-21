@@ -53,6 +53,7 @@ exports.createOne = (Model) =>
         value: req.body.variantsValue,
         SKU: req.body.SKU,
         price: req.body.price,
+        stock: req.body.stock,
       };
     }
 

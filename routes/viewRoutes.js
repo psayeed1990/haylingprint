@@ -119,7 +119,7 @@ router.get('/admin/products', async (req, res) => {
 router.get('/admin/products/:id', async (req, res) => {
   const product = await Product.findById(req.params.id);
 
-  res.render('admin/singleProduct', { product });
+  res.render('admin/singleProduct', { product, layout: 'layoutAdmin' });
 });
 
 router.post(
@@ -151,6 +151,8 @@ router.post('/admin/add-variants', async (req, res) => {
           name: req.body.name,
           value: req.body.value,
           SKU: req.body.SKU,
+          stock: req.body.stock,
+          price: req.body.price,
         },
       },
     }

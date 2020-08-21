@@ -1,12 +1,14 @@
 <div id="page">
     <form method="POST" action="/admin/add-variants">
         <input type="text" name="product" placeholder="Main Product SKU" required>
-        <p>Fill below If this is a variant of a variant.</p>
-        <input type="text" name="base" placeholder="SKU of the parent variant">
+        
         <input type="text" name="name" placeholder="Variant Name" required>
         <input type="text" name="value" placeholder="Variant value" required>
         <input type="text" name="SKU" placeholder="SKU of this variant" required>
-        
+        <input type="text" name="stock" placeholder="Left in stock" required>
+        <input type="text" name="price" placeholder="Price">
+        <p>Fill below If this is a variant of a variant.</p>
+        <input type="text" name="base" placeholder="SKU of the parent variant">
 
         <input type="submit" value="Add a variant">
     </form>

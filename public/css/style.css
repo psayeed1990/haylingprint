@@ -166,10 +166,17 @@ p.btn {
   padding: 20px;
   border: 1px solid #ccc;
 }
-
+.varints-admin-show {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
 /*ends product*/
 
 /*starts admin*/
+
+.del-wrapper {
+  height: 60px;
+}
 
 .admin input[type='submit'] {
   padding: 10px;

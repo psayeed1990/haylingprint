@@ -18,7 +18,16 @@
 
 
 
-                <span><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"><span id="cart-count"></span></i>
+                <span><a href="/cart">
+                    
+                    <i class="fa fa-shopping-cart" aria-hidden="true">
+                        
+                       
+                            
+                        <span id="cart-count"></span>
+                        
+                        
+                    </i>
 Cart</a></span>
                 <% if(typeof user != 'undefined'){ %>
                     <span><a href="/account"><i class="fa fa-users" aria-hidden="true"></i>
@@ -107,29 +116,29 @@ Account</a></span>
 
 </div>
 <script>
-function allStorage() {
+// function allStorage() {
 
-    var cartValues = [],
-    cartCount = 0,
-    keys = Object.keys(localStorage),
-    i = keys.length;
+//     var cartValues = [],
+//     cartCount = 0,
+//     keys = Object.keys(localStorage),
+//     i = keys.length;
 
-    while ( i-- ) {
-    cartValues.push(JSON.parse(localStorage.getItem(keys[i])) );
-    }
+//     while ( i-- ) {
+//     cartValues.push(JSON.parse(localStorage.getItem(keys[i])) );
+//     }
 
-    for(var j = 0; j < cartValues.length; j++){
-        cartCount += Number(cartValues[j].quantity);
+//     for(var j = 0; j < cartValues.length; j++){
+//         cartCount += Number(cartValues[j].quantity);
 
-    }
+//     }
 
-    document.getElementById('cart-count').innerHTML = cartCount;
+//     document.getElementById('cart-count').innerHTML = cartCount;
 
     
     
     
-}
-allStorage();
+// }
+// allStorage();
 </script>
 </header>
 

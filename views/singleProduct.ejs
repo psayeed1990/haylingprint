@@ -35,13 +35,13 @@
         <p>Price: <span id="price"><%= product.price %></span></p>
         <p>Stock Left:<span id="stock"><%= product.stock %></span></p>
     
-        <form onsubmit="event.preventDefault(); addToCart()">
+        <form action="/add-to-cart" method="POST">
             <label style="display: inline;">Quantity: </label> <input id="quantity" name="quantity" type="number"
                 style="width: 40px; display: inline;" max="<%= product.stock %>" min="1" required>
-            <input type="hidden" id="product-id" name="productId" value="<%= product.id%>">
-            <input type="hidden" id="product-price" name="productPrice" value="<%= product.price%>">
-            <input type="hidden" id="product-name" name="productName" value="<%= product.name%>">
+            <input type="hidden" id="product-id" name="product" value="<%= product.id%>">
+            
             <input type="submit" id="add-cart" class="add-cart" value="Add to cart">
+            <a id="message-info" href="/cart">Added to cart. Visit cart</a>
         </form>
     
     
@@ -51,30 +51,35 @@
 
 
 
-            let productId = document.getElementById('product-id').value;
-            let productName = document.getElementById('product-name').value;
-            let productPrice= document.getElementById('product-price').value;
+            // let productId = document.getElementById('product-id').value;
+            // let productName = document.getElementById('product-name').value;
+            // let productPrice= document.getElementById('product-price').value;
 
-            function addToCart() {
+            // function addToCart() {
                 
-                if (this.quantity.value >= 1 && this.quantity.value <= this.quantity.max) {
+            //     if (this.quantity.value >= 1 && this.quantity.value <= this.quantity.max) {
 
-                    let dataArray = {id: productId, name: productName, price: productPrice, quantity: this.quantity.value};
+            //         let dataArray = {id: productId, name: productName, price: productPrice, quantity: this.quantity.value};
                     
-                    // let localValue = parseInt(localStorage.getItem(productId), 10);
+            //         // let localValue = parseInt(localStorage.getItem(productId), 10);
                     
-                    // if(localValue !== NaN){
-                    //     let addtToLocalValue = this.quantity.value + localValue;
-                    //     console.log(addtToLocalValue);
-                    //     localStorage.setItem(productId.toString(), addtToLocalValue.toString());
-                    // }
+            //         // if(localValue !== NaN){
+            //         //     let addtToLocalValue = this.quantity.value + localValue;
+            //         //     console.log(addtToLocalValue);
+            //         //     localStorage.setItem(productId.toString(), addtToLocalValue.toString());
+            //         // }
                     
 
-                    localStorage.setItem(productId.toString(), JSON.stringify(dataArray));
+            //         //localStorage.setItem(productId.toString(), JSON.stringify(dataArray));
+
+
                     
-                        allStorage();
-                }
-            }
+            //         allStorage();
+
+            //         document.getElementById('message-info').style.display = 'block';
+
+            //     }
+            // }
 
 
 

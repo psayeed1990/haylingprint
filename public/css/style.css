@@ -163,6 +163,9 @@ input[type='file'] {
   color: #fff;
   border: 0px solid #bb9a89;
 }
+#message-info {
+  display: none;
+}
 /*ends form */
 
 /*starts product */
@@ -432,13 +435,20 @@ p.btn {
 }
 .cart-product {
   display: grid;
-  grid-template-columns: 20% 20% 20% 20%;
+  grid-template-columns: 15% 15% 15% 15% 15%;
   padding: 30px;
   margin: 30px;
   border: 1px solid #e7e7e7;
   box-shadow: 0 0px 2px 0px #ccc;
 }
-
+.cart-product input[type='submit'] {
+  padding: 2px;
+  width: auto;
+  color: #747474;
+  background: #fafafa;
+  margin: 10px auto;
+  cursor: pointer;
+}
 #cart-page {
   padding: 30px;
 }

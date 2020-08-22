@@ -11,6 +11,7 @@ const productController = require('./../controllers/productController');
 const Cart = require('./../models/cartModel');
 const User = require('./../models/userModel');
 const { route } = require('./userRoutes');
+const { findByIdAndUpdate } = require('./../models/categoryModel');
 
 router.use(authController.isLoggedIn);
 
@@ -25,6 +26,7 @@ const categoriesFunction = async (req, res, next) => {
   // })
   next();
 };
+
 router.use(categoriesFunction);
 router.get('/', async (req, res) => {
   const homeLinks = await Home.find();
@@ -45,16 +47,8 @@ router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
-router.get('/cart', async (req, res) => {
-  //catch localstorage
-  res.render('cart');
-});
 router.get('/about', (req, res) => {
   res.render('about');
-});
-
-router.get('/account', authController.protect, (req, res) => {
-  res.render('user/account');
 });
 
 //product get all
@@ -92,15 +86,65 @@ router.get('/categories/:id', async (req, res) => {
   }
 });
 
+//admin only
+//for user only
+
+router.use(authController.protect);
+
+router.get('/account', (req, res) => {
+  res.render('user/account');
+});
+
+router.get('/cart', async (req, res) => {
+  const carts = await Cart.find({ user: req.user.id });
+
+  res.render('cart', { carts });
+});
+router.get('/add-to-cart', (req, res) => {
+  res.render('products', { error: 'Now add to cart' });
+});
+router.post('/update-cart', async (req, res) => {
+  await Cart.findByIdAndDelete(req.body.id);
+  res.redirect('/cart');
+});
+router.post('/add-to-cart', async (req, res) => {
+  if (req.body.quantity > req.body.stock) {
+    return res.redirect(`/products/${req.body.product}`);
+  }
+  const cart = await Cart.findOne({
+    user: req.user.id,
+    product: req.body.product,
+  });
+
+  //if not cart
+  if (!cart) {
+    console.log('not');
+    const newCart = await Cart.create({
+      user: req.user.id,
+      product: req.body.product,
+      quantity: req.body.quantity,
+    });
+
+    return res.redirect(`/products/${req.body.product}`);
+  }
+
+  //if already a cart for that product
+  const quantity = req.body.quantity + cart.quantity;
+  if (quantity > cart.product.stock) {
+    return res.redirect(`/products/${req.body.product}`);
+  }
+  const newCart = await Cart.findByIdAndUpdate(cart.id, {
+    quanity: quantity,
+  });
+
+  return res.redirect(`/products/${req.body.product}`);
+});
+
 router.get('/checkout', (req, res) => {
   res.render('checkout');
 });
 
-//admin only
-//for admin only
-
-router.use(authController.protect, authController.restrictTo('admin'));
-
+router.use(authController.restrictTo('admin'));
 //dashboard
 router.get('/admin', async (req, res) => {
   res.render('admin/dashboard', { layout: 'layoutAdmin' });

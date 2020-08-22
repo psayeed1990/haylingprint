@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
   //   { email: 'sayeedmondal1412@gmail.com' },
   //   { role: 'admin', emailVerified: true }
   // );
-  const products = await Product.find();
+  const products = await Product.find().sort({ date: -1 }).limit(8);
   res.render('home', { homeLinks, products });
 });
 

@@ -23,7 +23,13 @@
                 <% } %>
                 
 
-                
+                <div id="variable-form">
+
+                    <label id="base-name" style="font-weight: bold;">
+                        
+                    </label>
+
+                </div>
 
     
         <p>Price: <span id="price"><%= product.price %></span></p>
@@ -71,6 +77,42 @@
             }
 
 
+
+
+     //starts code for product variable
+
+    if (document.getElementById('variants')) {
+        let variants = JSON.parse(document.getElementById('variants').innerHTML);
+        let variableForm = document.getElementById('variable-form');
+        let baseName = document.getElementById('base-name');
+        let price = document.querySelector('span#price');
+        let stock = document.querySelector('span#stock');
+
+        //base radio show
+        for (var i = 0; i < variants.length; i++) {
+            if (variants[i].base === null || variants[i].base === "") {
+                baseName.innerHTML = variants[i].name + ": ";
+                variableForm.innerHTML += `<input id="base-radio-${i}" style="width: 40px; display: inline;" type="radio" name="variableName" value="${variants[i].value}"><label style="width: 40px; display: inline;">${variants[i].value}</label>`;
+
+                document.getElementById(`base-radio-${i}`).addEventListener('change', changeContent);
+
+            }
+        }
+
+        //base radio functionality
+        
+        
+        function changeContent (){
+
+            console.log('hi');
+            
+
+        }
+        
+
+    }
+                        
+ //ends code for product variable
             
         </script>
         

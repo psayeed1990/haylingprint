@@ -92,6 +92,10 @@ router.get('/categories/:id', async (req, res) => {
   }
 });
 
+router.get('/checkout', (req, res) => {
+  res.render('checkout');
+});
+
 //admin only
 //for admin only
 

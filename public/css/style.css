@@ -84,6 +84,7 @@ ul {
 /*end header code */
 
 /*form starts*/
+
 .form {
   margin: 100px auto;
   padding: 50px;
@@ -129,6 +130,36 @@ input[type='file'] {
   background: #7dd0e6;
   box-shadow: 0 0 3px 0px #999;
   border: 1px solid #a8deec;
+}
+
+.quick-quote-wrapper {
+  padding: 20px;
+}
+.quick-quote {
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.quick-quote-wrapper h2 {
+  background: #fff;
+  width: max-content;
+  margin: 20px auto;
+  padding: 10px;
+  border-radius: 2px;
+  color: #8c7d81;
+  border: 2px solid;
+}
+
+.quick-quote input,
+.quick-quote textarea {
+  background-color: #edf9fb;
+}
+.quick-quote input[type='submit'] {
+  margin-bottom: 20px;
+  background: #f05b82;
+  opacity: 0.7;
+  color: #fff;
+  border: 0px solid #bb9a89;
 }
 /*ends form */
 
@@ -410,3 +441,13 @@ p.btn {
   padding: 30px;
 }
 /*product page front */
+
+/*footer */
+footer {
+  display: block;
+  position: relative;
+  background: #f7f7f7;
+  padding: 30px;
+  margin: 250px auto 0;
+  box-shadow: 0px 0 3px 0px;
+}

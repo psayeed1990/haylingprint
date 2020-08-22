@@ -99,8 +99,8 @@
                             </a> -->
                     <p> <%= product.description %></p>
                 
-                    <p>Price: <%= product.price %></p>
-                    <p>Stock Left: <%= product.stock %></p>
+                    <p>Price: <span class="numbers"><%= product.price %></p></span>
+                    <p>Stock Left: <span class="numbers"><%= product.stock %></p></span>
                 
                     <a href="/products/<%= product.id%>"><button id="add-cart" class="add-cart">Buy Now</button></a>
                 

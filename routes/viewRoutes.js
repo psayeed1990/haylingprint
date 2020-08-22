@@ -129,14 +129,21 @@ router.post('/add-to-cart', async (req, res) => {
   }
 
   //if already a cart for that product
-  const quantity = req.body.quantity + cart.quantity;
+  const quantity = Number(req.body.quantity) + cart.quantity;
+
   if (quantity > cart.product.stock) {
     return res.redirect(`/products/${req.body.product}`);
   }
-  const newCart = await Cart.findByIdAndUpdate(cart.id, {
-    quanity: quantity,
-  });
 
+  const newCart = await Cart.findByIdAndUpdate(
+    cart.id,
+    {
+      quantity,
+    },
+    { new: true }
+  );
+
+  console.log(newCart);
   return res.redirect(`/products/${req.body.product}`);
 });
 

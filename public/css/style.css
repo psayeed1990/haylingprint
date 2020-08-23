@@ -98,7 +98,7 @@ textarea {
   width: 70%;
   margin: 10px auto;
   padding: 10px;
-  border: 1px solid #7dd0e6;
+  border: 1px solid #e6e47d;
   box-shadow: inset 2px 2px 5px 2px #ddd;
   color: #444;
   max-width: 600px;
@@ -442,7 +442,7 @@ p.btn {
 }
 .cart-product {
   display: grid;
-  grid-template-columns: 15% 15% 15% 15% 15%;
+  grid-template-columns: 15% 15% 15% 15% 15% 15%;
   padding: 30px;
   margin: 30px;
   border: 1px solid #e7e7e7;
@@ -472,9 +472,8 @@ footer {
 }
 .numbers {
   background-color: white;
-  color: #3691c8;
-  text-shadow: 0 0px 1px #333;
-  font-weight: bold;
+  color: #0f1f28;
   font-size: 2em;
   opacity: 0.6;
+  font-family: open sans condensed;
 }

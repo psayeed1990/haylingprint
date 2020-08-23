@@ -10,6 +10,7 @@ const APIFeatures = require('./../utils/apiFeatures');
 const productController = require('./../controllers/productController');
 const Cart = require('./../models/cartModel');
 const User = require('./../models/userModel');
+const Order = require('./../models/orderModel');
 const { route } = require('./userRoutes');
 const { findByIdAndUpdate } = require('./../models/categoryModel');
 
@@ -107,56 +108,75 @@ router.post('/update-cart', async (req, res) => {
   await Cart.findByIdAndDelete(req.body.id);
   res.redirect('/cart');
 });
-router.post('/add-to-cart', async (req, res) => {
-  if (req.body.quantity > req.body.stock) {
-    return res.redirect(`/products/${req.body.product}`);
-  }
-  const cart = await Cart.findOne({
-    user: req.user.id,
-    product: req.body.product,
-  });
-
-  //if not cart
-  if (!cart) {
-    console.log('not');
-    const newCart = await Cart.create({
+router.post(
+  '/add-to-cart',
+  productController.uploadProductImages,
+  productController.resizeProductImages,
+  async (req, res) => {
+    if (req.body.quantity > req.body.stock) {
+      return res.redirect(`/products/${req.body.product}`);
+    }
+    const cart = await Cart.findOne({
       user: req.user.id,
       product: req.body.product,
-      quantity: req.body.quantity,
     });
 
+    //if not cart
+    if (!cart) {
+      console.log('not');
+      const newCart = await Cart.create({
+        user: req.user.id,
+        product: req.body.product,
+        quantity: req.body.quantity,
+        imageCover: req.body.imageCover,
+      });
+
+      return res.redirect(`/products/${req.body.product}`);
+    }
+
+    //if already a cart for that product
+    const quantity = Number(req.body.quantity) + cart.quantity;
+
+    if (quantity > cart.product.stock) {
+      return res.redirect(`/products/${req.body.product}`);
+    }
+
+    const newCart = await Cart.findByIdAndUpdate(
+      cart.id,
+      {
+        quantity,
+      },
+      { new: true }
+    );
+
+    console.log(newCart);
     return res.redirect(`/products/${req.body.product}`);
   }
+);
 
-  //if already a cart for that product
-  const quantity = Number(req.body.quantity) + cart.quantity;
-
-  if (quantity > cart.product.stock) {
-    return res.redirect(`/products/${req.body.product}`);
-  }
-
-  const newCart = await Cart.findByIdAndUpdate(
-    cart.id,
-    {
-      quantity,
-    },
-    { new: true }
-  );
-
-  console.log(newCart);
-  return res.redirect(`/products/${req.body.product}`);
+router.get('/checkout', async (req, res) => {
+  const carts = await Cart.find({ user: req.user.id });
+  res.render('checkout', { carts });
 });
 
-router.get('/checkout', (req, res) => {
-  res.render('checkout');
-});
+router.post('/orders', (req, res) => {});
 
 //admin only
 router.use(authController.restrictTo('admin'));
 
 //order processing
-router.get('/admin/orders', (req, res) => {
-  res.render('admin/orders', { layout: 'layoutAdmin' });
+router.get('/admin/orders', async (req, res) => {
+  if (req.params.orderId) filter = { order: req.params.productId };
+
+  const features = new APIFeatures(Order.find(filter), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  // const doc = await features.query.explain();
+  const orders = await features.query;
+
+  res.render('admin/orders', { layout: 'layoutAdmin', orders });
 });
 
 //dashboard
@@ -166,7 +186,7 @@ router.get('/admin', async (req, res) => {
 
 router.get('/admin/products', async (req, res) => {
   let filter = {};
-  if (req.params.productId) filter = { tour: req.params.productId };
+  if (req.params.productId) filter = { product: req.params.productId };
 
   const features = new APIFeatures(Product.find(filter), req.query)
     .filter()

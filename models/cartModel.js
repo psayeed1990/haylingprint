@@ -18,7 +18,9 @@ const cartSchema = new Schema({
     type: Number,
     required: true,
   },
-
+  imageCover: {
+    type: String,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

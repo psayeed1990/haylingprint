@@ -5,7 +5,7 @@
                 <div id="cart">
 
                     <div class="cart-product">
-                        
+                        <a href="/products/<%= carts[i].product.id %>"><img src="/img/products/<%= carts[i].product.imageCover %>" width="100"></a>
                         <a href="/products/<%= carts[i].product.id %>"><p><%= carts[i].product.name %></p></a>
                         <p><b>Quantity:</b> <%= carts[i].quantity %></p>
                         <p><b>Price:</b> <%= carts[i].product.price %></p>

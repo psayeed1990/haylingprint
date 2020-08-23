@@ -32,9 +32,11 @@ Cart</a></span>
                 <% if(typeof user != 'undefined'){ %>
                     <span><a href="/account"><i class="fa fa-users" aria-hidden="true"></i>
 Account</a></span>
+                    <span><a href="/api/v1/users/logout">Logout</a></span>
                 <%}%>
                 <% if(typeof user == 'undefined'){ %>
                     <span><a href="/login">Login</a></span>
+                    <span><a href="/register">Register</a></span>
                 <%}%>
             </p>
         </div>

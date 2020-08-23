@@ -151,7 +151,14 @@ router.get('/checkout', (req, res) => {
   res.render('checkout');
 });
 
+//admin only
 router.use(authController.restrictTo('admin'));
+
+//order processing
+router.get('/admin/orders', (req, res) => {
+  res.render('admin/orders', { layout: 'layoutAdmin' });
+});
+
 //dashboard
 router.get('/admin', async (req, res) => {
   res.render('admin/dashboard', { layout: 'layoutAdmin' });

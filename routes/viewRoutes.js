@@ -139,6 +139,7 @@ router.post(
     const cart = await Cart.findOne({
       user: req.user.id,
       product: req.body.product,
+      SKU: req.body.SKU,
     });
 
     //if not cart
@@ -149,6 +150,7 @@ router.post(
         product: req.body.product,
         quantity: req.body.quantity,
         imageCover: req.body.imageCover,
+        SKU: req.body.SKU,
       });
 
       return res.redirect(`/products/${req.body.product}`);

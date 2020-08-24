@@ -14,6 +14,8 @@ const cartSchema = new Schema({
     required: true,
   },
 
+  SKU: String,
+
   quantity: {
     type: Number,
     required: true,

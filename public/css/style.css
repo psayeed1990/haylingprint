@@ -130,9 +130,9 @@ button,
 
 select,
 input[type='file'] {
-  background: #7dd0e6;
+  background: #ffe4b0;
   box-shadow: 0 0 3px 0px #999;
-  border: 1px solid #a8deec;
+  border: 1px solid #f0e6e6;
 }
 
 .quick-quote-wrapper {

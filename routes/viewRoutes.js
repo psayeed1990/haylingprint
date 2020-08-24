@@ -8,13 +8,25 @@ const authController = require('./../controllers/authController');
 const adminController = require('./../controllers/adminController');
 const APIFeatures = require('./../utils/apiFeatures');
 const productController = require('./../controllers/productController');
+const userController = require('./../controllers/userController');
 const Cart = require('./../models/cartModel');
 const User = require('./../models/userModel');
 const Order = require('./../models/orderModel');
 const { route } = require('./userRoutes');
 const { findByIdAndUpdate } = require('./../models/categoryModel');
+const paypal = require('paypal-rest-sdk');
 
 router.use(authController.isLoggedIn);
+
+//starts paypal
+paypal.configure({
+  mode: 'sandbox', //sandbox or live
+  client_id:
+    'AUJoKVGO3q1WA1tGgAKRdY6qx0qQNIQ6vl6D3k7y64T4qh5WozIQ7V3dl3iusw5BwXYg_T5FzLCRguP8',
+  client_secret:
+    'EOw8LNwDhM7esrQ3nHfzKc7xiWnJc83Eawln4YLfUgivfx1LGzu9Mj0F5wlarilXDqdK9Q5aHVo-VGjJ',
+});
+//ends paypal
 
 const categoriesFunction = async (req, res, next) => {
   categories = await Category.find();
@@ -87,7 +99,10 @@ router.get('/categories/:id', async (req, res) => {
   }
 });
 
-//admin only
+router.get('/contact-us', (req, res) => {
+  res.render('contact');
+});
+
 //for user only
 
 router.use(authController.protect);
@@ -95,6 +110,11 @@ router.use(authController.protect);
 router.get('/account', (req, res) => {
   res.render('user/account');
 });
+router.get('/account/details', (req, res) => {
+  res.render('user/accountDetails');
+});
+
+router.post('/account/details', userController.updateMe);
 
 router.get('/cart', async (req, res) => {
   const carts = await Cart.find({ user: req.user.id });
@@ -159,7 +179,110 @@ router.get('/checkout', async (req, res) => {
   res.render('checkout', { carts });
 });
 
-router.post('/orders', (req, res) => {});
+router.post('/pay', async (req, res) => {
+  const items = await Cart.find({ user: req.user.id });
+  const total = req.body.amount.toString();
+  var create_payment_json = {
+    intent: 'sale',
+    payer: {
+      payment_method: 'paypal',
+    },
+    redirect_urls: {
+      return_url: 'http://localhost:5000/success',
+      cancel_url: 'http://localhost:5000/cancell',
+    },
+    transactions: [
+      {
+        item_list: {
+          items: JSON.stringify(items),
+        },
+        amount: {
+          currency: 'USD',
+          total,
+        },
+        description: req.body.orderComment.toString(),
+      },
+    ],
+  };
+
+  paypal.payment.create(create_payment_json, function (error, payment) {
+    if (error) {
+      res.json({ error });
+      throw error;
+    } else {
+      console.log('rr');
+      for (let i = 0; i < payment.links.length; i++) {
+        if (payment.links[i].rel === 'approval_url') {
+          res.redirect(payment.links[i].href);
+        }
+      }
+    }
+  });
+});
+
+router.get('/success', async (req, res) => {
+  const payerId = req.params.PayerID;
+  const paymentId = req.params.PaymentID;
+
+  const execute_payment_json = {
+    payer_id: payerId,
+    // transactions: [
+    //   {
+    //     amount: {
+    //       currency: 'usd',
+    //       total,
+    //     },
+    //   },
+    // ],
+  };
+
+  paypal.payment.execute(paymentId, execute_payment_json, async function (
+    error,
+    payment
+  ) {
+    if (error) {
+      console.log(error.response);
+      throw error;
+    } else {
+      const carts = await Cart.find({ user: req.user.id });
+
+      const newOrder = await Order.create({
+        user: req.user.id,
+        carts,
+        paid: true,
+        address: req.user.address,
+        amount: payment.transactions[0].amount.total,
+      });
+
+      res.redirect('/orders');
+    }
+  });
+});
+
+router.get('/cancell', (req, res) => {
+  res.send("didn't happen");
+});
+
+router.get('/orders', async (req, res) => {
+  const orders = await Order.find({
+    user: req.user.id,
+    completed: { $ne: true },
+  });
+  res.render('user/orders', { orders });
+});
+router.get('/orders:id', async (req, res) => {
+  const order = Order.findById(req.params.id);
+
+  res.render('user/singleOrder', { order });
+});
+
+router.get('/orders/completed', async (req, res) => {
+  const orders = await Order.find({
+    user: req.user.id,
+    completed: { $ne: false },
+  });
+  res.render('user/ordersCompleted', { orders });
+});
 
 //admin only
 router.use(authController.restrictTo('admin'));

@@ -2,14 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-  products: [
+  user: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+  },
+  carts: [
     {
       type: mongoose.Schema.ObjectId,
-      ref: 'Product',
-      required: [true, 'Product ID is required'],
+      ref: 'Cart',
+      required: [true, 'Cart ID is required'],
     },
   ],
-  SKUs: [],
+
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -19,12 +23,26 @@ const orderSchema = new Schema({
   address: {
     type: String,
   },
+  completed: Boolean,
 });
 
 // populate
 orderSchema.pre(/^find/, function (next) {
   this.populate({
-    path: 'products',
+    path: 'carts',
+    select: '-__v',
+    populate: {
+      path: 'product',
+      select: '-__v',
+    },
+  });
+
+  next();
+});
+
+orderSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'user',
     select: '-__v',
   });
 

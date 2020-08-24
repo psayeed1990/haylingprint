@@ -14,8 +14,9 @@
             <p>Total Price: <%= totalPrice %></p>
 
 
-            <form method="POST" action="/orders">
+            <form method="POST" action="/pay">
                 <input type="hidden" value="" name="id">
+                <input type="hidden" value="<%= totalPrice %>" name="amount">
                 <input type="text" placeholder="Name" name="name">
                 <input type="text" placeholder="Email" name="email">
                 <input type="text" placeholder="Address, zip, city, state, country" name="address">

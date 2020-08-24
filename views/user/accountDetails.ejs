@@ -1,0 +1,8 @@
+<form action="/account/details" method="POST">
+    <input type="hidden" name="id" value="<%= user.id %>">
+    <input type="text" name="name" value="<%= user.name %>" placeholder="name">
+    <input type="text" name="email" value="<%= user.email %>" placeholder="email">
+    <input type="text" name="address" value="<%= user.address %>" placeholder="address, home, street, zip, city, state, country">
+    <input type="text" name="phone" value="<%= user.phone %>" placeholder="phone">
+    <input type="submit" value="Update profile">
+</form>

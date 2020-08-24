@@ -70,7 +70,8 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // 2) Filtered out unwanted fields names that are not allowed to be updated
-  const filteredBody = filterObj(req.body, 'name', 'email');
+  const filteredBody = filterObj(req.body, 'name', 'email', 'address', 'phone');
+  console.log(filteredBody);
   if (req.file) filteredBody.photo = req.file.filename;
 
   // 3) Update user document
@@ -79,12 +80,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      user: updatedUser,
-    },
-  });
+  res.redirect('/account/details');
 });
 
 exports.deleteMe = catchAsync(async (req, res, next) => {

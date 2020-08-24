@@ -19,6 +19,7 @@ const userSchema = new Schema({
     unique: true,
     validate: [validator.isEmail, 'Email is not valid'],
   },
+  phone: String,
   password: {
     type: String,
     minlength: [12, 'password must be minimum 12 characters long'],
@@ -54,6 +55,7 @@ const userSchema = new Schema({
     default: true,
     select: false,
   },
+  address: String,
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,

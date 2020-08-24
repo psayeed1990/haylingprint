@@ -15,6 +15,9 @@
                 value="<%= typeof password != 'undefined' ? password : '' %>" />
             <input type="password" name="passwordConfirm" placeholder="password again" required
                 value="<%= typeof passwordConfirm != 'undefined' ? passwordConfirm : '' %>" />
+                <input type="text" name="phone" placeholder="Phone" required
+                    value="<%= typeof phone != 'undefined' ? phone : '' %>" />
+                <textarea name="address" required placeholder="home, city, zip, state, country"></textarea>
             <input type="submit" value="Register" />
         </form>
     </div>

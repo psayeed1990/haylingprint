@@ -477,3 +477,10 @@ footer {
   opacity: 0.6;
   font-family: open sans condensed;
 }
+
+/* Responsive design starts here */
+
+@media only screen and (max-width: 1280px) {
+}
+
+/* ends responsive design */

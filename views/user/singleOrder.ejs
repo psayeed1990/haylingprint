@@ -1,0 +1,9 @@
+<% if (typeof order != 'undefined'){ %> 
+    <% for(var i = 0; i < order.carts.length; i++){ %>
+        <p>Product Name<% order.carts[i].product.name %></p>
+        <p>Product Name<% order.carts[i].product.price %></p>
+        <p>Product Name<% order.carts[i].quantity %></p>
+    <%}%>
+   
+    
+<%} %>

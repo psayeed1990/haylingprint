@@ -17,11 +17,12 @@
             <form method="POST" action="/pay">
                 <input type="hidden" value="" name="id">
                 <input type="hidden" value="<%= totalPrice %>" name="amount">
-                <input type="text" placeholder="Name" name="name">
-                <input type="text" placeholder="Email" name="email">
-                <input type="text" placeholder="Address, zip, city, state, country" name="address">
-                <input type="text" placeholder="Phone" name="phone">
-                <textarea name="orderComment" placeholder="Order comment"></textarea>
+                <input type="text" placeholder="Name" value="<%= user.name %>" name="name" required>
+                <input type="text" placeholder="Email" value="<%= user.email %>" name="email" required>
+                <input type="text" placeholder="Address, zip, city, state, country" value="<%= user.address %>" name="address" disabled>
+                <input type="text" placeholder="Phone" name="phone" value="<%= user.phone %>" required> 
+                <textarea name="orderComment" placeholder="Order comment (optional)"></textarea>
+                <p style="font-family: open sans condensed;">*To change address please go to your profile details</p>
                 <input style="background-color: #07800e;" type="submit" value="Place Order">
             </form>
 

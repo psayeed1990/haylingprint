@@ -24,6 +24,7 @@ const orderSchema = new Schema({
     type: String,
   },
   completed: Boolean,
+  cancelled: Boolean,
 });
 
 // populate

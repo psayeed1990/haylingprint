@@ -52,6 +52,7 @@
                 style="width: 40px; display: inline;" max="<%= product.stock %>" min="1" required>
             <input type="hidden" id="product-id" name="product" value="<%= product.id%>">
             <input type="hidden" id="sku" name="SKU" value="<%= product.SKU %>">
+            
             <br><br><label>Upload a design of your choice</label><input style="width: 150px;" type="file" id="imageCover" name="imageCover">
             
             <input type="submit" id="add-cart" class="add-cart" value="Add to cart">
@@ -143,11 +144,11 @@
             }
             
             
-        
+        }
 
 
         //second level
-        
+        for (let i = 0; i < baseRadioClass.length; i++) {
             let secondLevel = variants.filter(variant => variant.base === baseVariants[i].SKU);
 
             let secondLevelForm = document.getElementById('secondLevel-form');
@@ -162,9 +163,9 @@
 
             let secondRadioClass = document.getElementsByClassName('second-radio');
             for (let j = 0; j < secondRadioClass.length; j++) {
-                secondRadioClass[j].addEventListener('click', changeContent());
+                secondRadioClass[j].addEventListener('click', changeSecContent);
 
-                function changeContent() {
+                function changeSecContent() {
                     price.innerHTML = secondLevel[j].price;
                     stock.innerHTML = secondLevel[j].stock;
                     sku.value = secondLevel[j].SKU;
@@ -182,9 +183,13 @@
 
                     }
                 }
-
-
+            }
+        }
+        for (let i = 0; i < baseRadioClass.length; i++) {
+            let secondLevel = variants.filter(variant => variant.base === baseVariants[i].SKU);
+            let secondRadioClass = document.getElementsByClassName('second-radio');
                 //third level
+            for (let j = 0; j < secondRadioClass.length; j++) {
                 let thirdLevel = secondLevel.filter(variant => variant.base === secondLevel[j].SKU);
                 let thirdLevelForm = document.getElementById('thirdLevel-form');
                 let thirdLevelName = document.getElementById('thirdLevel-name');
@@ -197,9 +202,9 @@
                 let thirdRadioClass = document.getElementsByClassName('third-radio');
 
                 for (let k = 0; k < thirdRadioClass.length; k++) {
-                    thirdRadioClass[k].addEventListener('click', changeContent);
+                    thirdRadioClass[k].addEventListener('click', changeThirdContent);
 
-                    function changeContent() {
+                    function changeThirdContent() {
                         price.innerHTML = thirdLevel[k].price;
                         stock.innerHTML = thirdLevel[k].stock;
                         sku.value = thirdLevel[k].SKU;

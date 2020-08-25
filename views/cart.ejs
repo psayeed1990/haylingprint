@@ -1,15 +1,16 @@
 <div class="page">
     <div id="cart-page">
         <% if(typeof carts != 'undefined') {%>
-            <%for(var i = 0; i < carts.length; i++) { %>                  
+            <%for(var i = 0; i < carts.length; i++) { %>  
+                <% if(carts[i].ordered === false){ %>                
                 <div id="cart">
 
                     <div class="cart-product">
                         <a href="/products/<%= carts[i].product.id %>"><img src="/img/products/<%= carts[i].product.imageCover %>" width="100"></a>
-                        <a href="/products/<%= carts[i].product.id %>"><p><%= carts[i].product.name %></p></a>
+                        <a href="/products/<%= carts[i].product.id %>"><p><%= carts[i].product.name %> | <%= carts[i].variantName %> | <%= carts[i].variantValue %></p></a>
                         <p><b>Quantity:</b> <%= carts[i].quantity %></p>
-                        <p><b>Price:</b> <%= carts[i].product.price %></p>
-                        <p><b>Total:</b> <%= carts[i].quantity * carts[i].product.price %></p>
+                        <p><b>Price:</b> <%= carts[i].price %></p>
+                        <p><b>Total:</b> <%= carts[i].quantity * carts[i].price %></p>
                         <form method="POST" action="/update-cart">
                             <input type="hidden" value="<%= carts[i].id %>" name="id">
                             <input type="submit" value="X">
@@ -18,6 +19,7 @@
                     
 
                 </div>
+                <% } %>
             <%}%>
         <% } %>
 

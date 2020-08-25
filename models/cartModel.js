@@ -20,10 +20,16 @@ const cartSchema = new Schema({
     type: Number,
     required: true,
   },
+  variantName: String,
+  variantValue: String,
+  price: Number,
   imageCover: {
     type: String,
   },
-  ordered: Boolean,
+  ordered: {
+    type: Boolean,
+    default: false,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),

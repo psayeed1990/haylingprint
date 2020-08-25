@@ -20,11 +20,9 @@ router.use(authController.isLoggedIn);
 
 //starts paypal
 paypal.configure({
-  mode: 'sandbox', //sandbox or live
-  client_id:
-    'AUJoKVGO3q1WA1tGgAKRdY6qx0qQNIQ6vl6D3k7y64T4qh5WozIQ7V3dl3iusw5BwXYg_T5FzLCRguP8',
-  client_secret:
-    'EOw8LNwDhM7esrQ3nHfzKc7xiWnJc83Eawln4YLfUgivfx1LGzu9Mj0F5wlarilXDqdK9Q5aHVo-VGjJ',
+  mode: 'live', //sandbox or live
+  client_id: process.env.PAYPAL_CLIENT_ID,
+  client_secret: process.env.PAYPAL_SECRET_KEY,
 });
 //ends paypal
 
@@ -145,12 +143,21 @@ router.post(
     //if not cart
     if (!cart) {
       console.log('not');
+      const selectedProduct = await Product.findById(req.body.product);
+
+      const selectedVariant = selectedProduct.variants.filter(
+        (variant) => variant.SKU === req.body.SKU
+      );
+
       const newCart = await Cart.create({
         user: req.user.id,
         product: req.body.product,
         quantity: req.body.quantity,
         imageCover: req.body.imageCover,
         SKU: req.body.SKU,
+        price: selectedVariant[0].price,
+        variantName: selectedVariant[0].name,
+        variantValue: selectedVariant[0].value,
       });
 
       return res.redirect(`/products/${req.body.product}`);
@@ -182,7 +189,24 @@ router.get('/checkout', async (req, res) => {
 });
 
 router.post('/pay', async (req, res) => {
-  const items = await Cart.find({ user: req.user.id });
+  const carts = await Cart.find({ user: req.user.id });
+
+  if (!carts) {
+    return res.redirect('/products');
+  }
+
+  let items = [];
+  carts.forEach((cart) => {
+    let item = {
+      name: cart.product.name,
+      sku: cart.SKU,
+      price: cart.product.price,
+      currency: 'GBP',
+      quantity: cart.quantity,
+    };
+    items.push(item);
+  });
+
   const total = req.body.amount.toString();
   var create_payment_json = {
     intent: 'sale',
@@ -196,10 +220,10 @@ router.post('/pay', async (req, res) => {
     transactions: [
       {
         item_list: {
-          items: JSON.stringify(items),
+          items: items,
         },
         amount: {
-          currency: 'USD',
+          currency: 'GBP',
           total,
         },
         description: req.body.orderComment.toString(),
@@ -253,13 +277,34 @@ router.get('/success', async (req, res) => {
         carts,
         paid: true,
         address: req.user.address,
-        amount: payment.transactions[0].amount.total,
       });
+
+      for (var i = 0; i < carts.length; i++) {
+        await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
+      }
 
       res.redirect('/orders');
     }
   });
 });
+
+//test order
+// router.post('/test-order', async (req, res) => {
+//   const carts = await Cart.find({ user: req.user.id });
+
+//   const newOrder = await Order.create({
+//     user: req.user.id,
+//     carts,
+//     paid: true,
+//     address: req.user.address,
+//   });
+
+//   for (var i = 0; i < carts.length; i++) {
+//     await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
+//   }
+
+//   res.redirect('/orders');
+// });
 
 router.get('/cancell', (req, res) => {
   res.send("didn't happen");

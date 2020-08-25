@@ -291,24 +291,24 @@ router.get('/success', async (req, res) => {
 });
 
 //test order
-router.post('/test-order', async (req, res) => {
-  const carts = await Cart.find({ user: req.user.id });
+// router.post('/test-order', async (req, res) => {
+//   const carts = await Cart.find({ user: req.user.id });
 
-  let cartsId = [];
-  for (var i = 0; i < carts.length; i++) {
-    cartsId.push(carts[i].id);
-    await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
-  }
+//   let cartsId = [];
+//   for (var i = 0; i < carts.length; i++) {
+//     cartsId.push(carts[i].id);
+//     await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
+//   }
 
-  const newOrder = await Order.create({
-    user: req.user.id,
-    carts: cartsId,
-    paid: true,
-    address: req.user.address,
-  });
+//   const newOrder = await Order.create({
+//     user: req.user.id,
+//     carts: cartsId,
+//     paid: true,
+//     address: req.user.address,
+//   });
 
-  res.redirect(`/orders/${newOrder.id}`);
-});
+//   res.redirect(`/orders/${newOrder.id}`);
+// });
 
 router.get('/cancell', (req, res) => {
   res.send("didn't happen");

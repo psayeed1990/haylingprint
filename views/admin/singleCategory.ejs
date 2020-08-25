@@ -1,0 +1,9 @@
+<div id="page">
+    <% if (typeof category != 'undefined'){ %> 
+        <form method="POST" action="/admin/category/<%= category.id %>">
+            <input type="text" value="<%= category.name %>">
+            <input type="text" value="<%= category.name %>">
+
+        </form>
+    <% } %>
+</div>

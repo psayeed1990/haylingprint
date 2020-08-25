@@ -3,7 +3,7 @@
 <% categories.forEach((category) => { %>
 
 <div id="category-admin">
-    <p>Catery Name: <%=category.name %></p>
+    <a href="/admin/category/<%= category.id %>"><p style="width: max-content; padding: 10px; margin: 5px auto; border: 1px solid #eee;">Catery Name: <%=category.name %></p></a>
 </div>
 
 <% }) %>

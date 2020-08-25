@@ -1,3 +1,29 @@
-<h1>Good</h1>
-<a href="/admin/add-product">Add Product</a>
-<a href="/admin/add-category">Add Category</a>
+<h1> Dashboard </h1>
+
+<form method="POST" action="/admin/search/orders">
+    <input style="max-width: 300px;" type="search" name="phone" placeholder="Search order by phone number"><input type="submit" value="search" style="width: 100px; padding: 3px;">
+</form>
+
+<div id="cart-page">
+    <% if(typeof orders != 'undefined') {%>
+        <h3>Recent Orders</h3>
+    <%for(var i = 0; i < orders.length; i++) { %>
+    <% if(orders[i].completed === false){ %>
+    <div id="cart">
+
+        <a href="/admin/orders/<%= orders[i].id %>">
+            <p style="width: max-content; padding: 10px; margin: 5px auto; border: 1px solid #eee;">
+                <%= orders[i].id %> by <%= orders[i].user.name %> <span style="color: #afdfd8;" id="processing">New</span></p>
+        </a>
+
+
+
+    </div>
+    <% } %>
+    <%}%>
+    <% } %>
+    <br>
+    <br>
+    <!-- <a class="button" href="/orders/completed">Completed orders</a> -->
+
+</div>

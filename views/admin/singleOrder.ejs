@@ -1,0 +1,49 @@
+<% if (typeof order != 'undefined'){ %>
+    <div class="customer-details">
+        <h2>Customer Details</h2>
+        <h3>Name: <b><%= order.user.name %></b></h3>
+        <h3>Email: <b><%= order.user.email %></b></h3>
+        <h3>Phone: <b><%= order.user.phone %></b></h3>
+        <h3>Address: <b><%= order.user.address %></b></h3>
+    </div>
+
+    <% if(order.completed === false){ %>
+        <p style="color: #afdfd8;" id="processing">Processing</p>
+    <% } %>
+
+    <% if(order.completed === true){ %>
+        <button style="color: #afdfd8;" id="processing">Completed</button>
+    <% } %>
+<% order.carts.forEach(cart => { %>
+<div class="single-product">
+    
+
+    <h2>Order Details</h2>
+
+    <a href="/products/<%= cart.product.id %>">
+        <p>Product Name: <b><%= cart.product.name %></b></p>
+    </a>
+    <a href="/products/<%= cart.product.id %>"><img src="/img/products/<%= cart.product.imageCover %>" width="150"></a>
+    <p>SKU: <b><%= cart.SKU %></b></p>
+    <p>Price: <b><%= cart.price %></b></p>
+    <% if(cart.variantName != 'undefined' && cart.variantValue != 'undefined'){ %>
+    <p><%= cart.variantName %>: <b><%= cart.variantValue %></b></p>
+    <% } %>
+    <p>Quantity: <b><%= cart.quantity %></b></p>
+    <% if(cart.imageCover){ %>
+    <br>
+    <br>
+    <p>Customer's uploaded design:</p>
+    <img src="/img/products/<%= cart.imageCover %>" width="150">
+    
+    <% } %>
+</div>
+<%})%>
+
+<% if(order.completed === false){ %>
+<form method="POST" action="/admin/orders/<%= order.id %>">
+    <input type="hidden" value="<%= order.id %>" name="id">
+    <input type="submit" value="Mark completed">
+</form>
+<% } %>
+<%} %>

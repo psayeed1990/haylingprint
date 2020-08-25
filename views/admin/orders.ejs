@@ -4,9 +4,9 @@
     <% if(orders[i].completed === false){ %>
     <div id="cart">
 
-        <a href="/orders/<%= orders[i].id %>">
-            <p style="width: max-content; padding: 10px; margin: 5px auto; border: 1px solid #eee;">order id:
-                <%= orders[i].id %> <span style="color: #afdfd8;" id="processing">Processing</span></p>
+        <a href="/admin/orders/<%= orders[i].id %>">
+            <p style="width: max-content; padding: 10px; margin: 5px auto; border: 1px solid #eee;">
+                <%= orders[i].id %> by <%= orders[i].user.name %> <span style="color: #afdfd8;" id="processing">Processing</span></p>
         </a>
 
 
@@ -17,6 +17,6 @@
     <% } %>
     <br>
     <br>
-    <a class="button" href="/orders/completed">Completed orders</a>
+    <!-- <a class="button" href="/orders/completed">Completed orders</a> -->
 
 </div>

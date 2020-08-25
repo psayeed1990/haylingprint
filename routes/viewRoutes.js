@@ -347,7 +347,7 @@ router.get('/orders/:id', async (req, res) => {
 router.get('/orders/completed', async (req, res) => {
   const orders = await Order.find({
     user: req.user.id,
-    completed: { $ne: false },
+    completed: true,
   });
   console.log(orders);
   res.render('user/ordersCompleted', { orders });
@@ -356,24 +356,59 @@ router.get('/orders/completed', async (req, res) => {
 //admin only
 router.use(authController.restrictTo('admin'));
 
-//order processing
-router.get('/admin/orders', async (req, res) => {
-  if (req.params.orderId) filter = { order: req.params.productId };
+//search order
+router.post('/admin/search/orders', async (req, res) => {
+  const user = await User.findOne({ phone: req.body.phone });
+  if (!user) {
+    return res.render('admin/searchOrders', {
+      layout: 'layoutAdmin',
+      orders,
+      phone: req.body.phone,
+    });
+  }
+  const orders = await Order.find({ user: user.id });
+  res.render('admin/searchOrders', {
+    layout: 'layoutAdmin',
+    orders,
+    phone: req.body.phone,
+  });
+});
 
-  const features = new APIFeatures(Order.find(filter), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  // const doc = await features.query.explain();
-  const orders = await features.query;
+//order processing
+router.get('/admin/orders/:id', async (req, res) => {
+  const order = await Order.findById(req.params.id).populate('carts');
+
+  res.render('admin/singleOrder', { layout: 'layoutAdmin', order });
+});
+
+router.post('/admin/orders/:id', async (req, res) => {
+  const updatedOrder = await Order.findByIdAndUpdate(
+    req.body.id,
+    { completed: true },
+    { new: true }
+  );
+
+  res.redirect(`/admin/orders/${updatedOrder.id}`);
+});
+
+// router.get('/admin/orders/completed', async (req, res) => {
+//   const orders = await Order.find();
+
+//   res.render('admin/ordersCompleted', { layout: 'layoutAdmin', orders });
+// });
+
+router.get('/admin/orders', async (req, res) => {
+  const orders = await Order.find({
+    completed: { $ne: true },
+  });
 
   res.render('admin/orders', { layout: 'layoutAdmin', orders });
 });
 
 //dashboard
 router.get('/admin', async (req, res) => {
-  res.render('admin/dashboard', { layout: 'layoutAdmin' });
+  const orders = await Order.find({ completed: { $ne: true } });
+  res.render('admin/dashboard', { orders, layout: 'layoutAdmin' });
 });
 
 router.get('/admin/products', async (req, res) => {
@@ -443,6 +478,12 @@ router.get('/admin/add-category', async (req, res) => {
 router.get('/admin/categories', async (req, res) => {
   //const categories = await Category.find();
   res.render('admin/categories', { layout: 'layoutAdmin' });
+});
+
+router.get('/admin/category/:id', async (req, res) => {
+  const category = await Category.findById(req.params.id);
+
+  res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
 });
 
 router.get('/admin/home', async (req, res) => {

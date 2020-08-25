@@ -486,6 +486,20 @@ router.get('/admin/category/:id', async (req, res) => {
   res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
 });
 
+router.post('/admin/category/:id', async (req, res) => {
+  const category = await Category.findByIdAndUpdate(
+    req.params.id,
+    {
+      name: req.body.name,
+      parentCategory: req.body.parentCategory,
+      slug: req.body.slug,
+    },
+    { new: true }
+  );
+
+  res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
+});
+
 router.get('/admin/home', async (req, res) => {
   const homes = await Home.find();
   const url = `${req.protocol}://${req.get('host')}`;

@@ -1,8 +1,24 @@
 <div id="page">
     <% if (typeof category != 'undefined'){ %> 
         <form method="POST" action="/admin/category/<%= category.id %>">
-            <input type="text" value="<%= category.name %>">
-            <input type="text" value="<%= category.name %>">
+            <input type="text" placeholder="Category name" name="name" value="<%= category.name %>">
+            <input type="text" placeholder="slug" name="slug" value="<%= category.slug %>">
+            <% if(typeof categories != 'undefined'){ %>
+            
+            <select name="parentCategory" id="reservedtable">
+                <option selected disabled>Parent Category:</option>
+                <% categories.forEach((category) => { %>
+            
+            
+                <option value="<%= category.id %>"><%= category.name %></option>
+            
+            
+                <% }) %>
+            
+            </select>
+            <% } %>
+
+            <input type="submit" value="Update Category">
 
         </form>
     <% } %>

@@ -272,53 +272,74 @@ router.get('/success', async (req, res) => {
     } else {
       const carts = await Cart.find({ user: req.user.id });
 
+      let cartsId = [];
+      for (var i = 0; i < carts.length; i++) {
+        cartsId.push(carts[i].id);
+        await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
+      }
+
       const newOrder = await Order.create({
         user: req.user.id,
-        carts,
+        carts: cartsId,
         paid: true,
         address: req.user.address,
       });
 
-      for (var i = 0; i < carts.length; i++) {
-        await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
-      }
-
-      res.redirect('/orders');
+      res.redirect(`/orders/${newOrder.id}`);
     }
   });
 });
 
 //test order
-// router.post('/test-order', async (req, res) => {
-//   const carts = await Cart.find({ user: req.user.id });
+router.post('/test-order', async (req, res) => {
+  const carts = await Cart.find({ user: req.user.id });
 
-//   const newOrder = await Order.create({
-//     user: req.user.id,
-//     carts,
-//     paid: true,
-//     address: req.user.address,
-//   });
+  let cartsId = [];
+  for (var i = 0; i < carts.length; i++) {
+    cartsId.push(carts[i].id);
+    await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
+  }
 
-//   for (var i = 0; i < carts.length; i++) {
-//     await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
-//   }
+  const newOrder = await Order.create({
+    user: req.user.id,
+    carts: cartsId,
+    paid: true,
+    address: req.user.address,
+  });
 
-//   res.redirect('/orders');
-// });
+  res.redirect(`/orders/${newOrder.id}`);
+});
 
 router.get('/cancell', (req, res) => {
   res.send("didn't happen");
 });
+
+//update order design
+router.post(
+  '/update-order-design',
+  productController.uploadProductImages,
+  productController.resizeProductImages,
+  async (req, res) => {
+    const newCart = await Cart.findByIdAndUpdate(
+      req.body.cartId,
+      { imageCover: req.body.imageCover },
+      { new: true }
+    );
+
+    res.redirect(`/orders/${req.body.orderId}`);
+  }
+);
 
 router.get('/orders', async (req, res) => {
   const orders = await Order.find({
     user: req.user.id,
     completed: { $ne: true },
   });
+
   res.render('user/orders', { orders });
 });
-router.get('/orders:id', async (req, res) => {
-  const order = Order.findById(req.params.id);
+router.get('/orders/:id', async (req, res) => {
+  const order = await Order.findById(req.params.id).populate('carts');
 
   res.render('user/singleOrder', { order });
 });
@@ -328,6 +349,7 @@ router.get('/orders/completed', async (req, res) => {
     user: req.user.id,
     completed: { $ne: false },
   });
+  console.log(orders);
   res.render('user/ordersCompleted', { orders });
 });
 

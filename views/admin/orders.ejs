@@ -1,16 +1,22 @@
 <div id="cart-page">
     <% if(typeof orders != 'undefined') {%>
     <%for(var i = 0; i < orders.length; i++) { %>
+    <% if(orders[i].completed === false){ %>
     <div id="cart">
 
-        <a href="/orders/<%= orders[i].id %>"><% orders[i].id %></a>
+        <a href="/orders/<%= orders[i].id %>">
+            <p style="width: max-content; padding: 10px; margin: 5px auto; border: 1px solid #eee;">order id:
+                <%= orders[i].id %> <span style="color: #afdfd8;" id="processing">Processing</span></p>
+        </a>
 
 
 
     </div>
+    <% } %>
     <%}%>
     <% } %>
-
-    <a href="/orders/completed">Completed orders</a>
+    <br>
+    <br>
+    <a class="button" href="/orders/completed">Completed orders</a>
 
 </div>

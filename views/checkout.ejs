@@ -8,13 +8,13 @@
             <% let totalPrice = 0 %>
             <%for(var i = 0; i < carts.length; i++) { %>
                 <% cartCount += carts[i].quantity %>
-                <% totalPrice += (carts[i].quantity * carts[i].product.price) %>
+                <% totalPrice += (carts[i].quantity * carts[i].price) %>
             <% } %>
             <p>Total quantity: <%= cartCount %></p>
             <p>Total Price: <%= totalPrice %></p>
 
 
-            <form method="POST" action="/pay">
+            <form method="POST" action="/test-order">
                 <input type="hidden" value="" name="id">
                 <input type="hidden" value="<%= totalPrice %>" name="amount">
                 <input type="text" placeholder="Name" value="<%= user.name %>" name="name" required>

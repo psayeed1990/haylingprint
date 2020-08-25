@@ -114,7 +114,7 @@
 
         baseVariants.forEach(variant => {
             baseName.innerHTML = variant.name + ": ";
-            variableForm.innerHTML += `<input class="base-radio" style="width: 40px; display: inline;" type="radio" name="baseVariableName" value="${variant.value}"><label style="width: 40px; display: inline;">${variant.value}</label>`;
+            variableForm.innerHTML += `<input class="base-radio" style="width: 40px; display: inline;" type="radio" name="baseVariableName" value="${variant.value}" required><label style="width: 40px; display: inline;">${variant.value}</label>`;
         });
 
         let baseRadioClass = document.getElementsByClassName('base-radio');
@@ -156,7 +156,7 @@
 
             secondLevel.forEach(variant => {
                 secondLevelName.innerHTML = variant.name + ": ";
-                secondLevelForm.innerHTML += `<input class="second-radio" style="width: 40px; display: inline;" type="radio" name="secondVariableName" value="${variant.value}"><label style="width: 40px; display: inline;">${variant.value}</label>`;
+                secondLevelForm.innerHTML += `<input class="second-radio" style="width: 40px; display: inline;" type="radio" name="secondVariableName" value="${variant.value}" required><label style="width: 40px; display: inline;">${variant.value}</label>`;
 
 
             });
@@ -196,7 +196,7 @@
 
                 thirdLevel.forEach(variant =>{
                     thirdLevelName.innerHTML = variant.name + ": ";
-                    thirdLevelForm.innerHTML += `<input class="third-radio" style="width: 40px; display: inline;" type="radio" name="thirdVariableName" value="${variant.value}"><label style="width: 40px; display: inline;">${variant.value}</label>`;
+                    thirdLevelForm.innerHTML += `<input class="third-radio" style="width: 40px; display: inline;" type="radio" name="thirdVariableName" value="${variant.value}" required><label style="width: 40px; display: inline;">${variant.value}</label>`;
                 })
 
                 let thirdRadioClass = document.getElementsByClassName('third-radio');

@@ -1,9 +1,31 @@
 <% if (typeof order != 'undefined'){ %> 
-    <% for(var i = 0; i < order.carts.length; i++){ %>
-        <p>Product Name<% order.carts[i].product.name %></p>
-        <p>Product Name<% order.carts[i].product.price %></p>
-        <p>Product Name<% order.carts[i].quantity %></p>
-    <%}%>
+    
+    <% order.carts.forEach(cart => { %>
+        <div class="single-product">
+        <a href="/products/<%= cart.product.id %>"><p>Product Name: <b><%= cart.product.name %></b></p></a>
+        <a href="/products/<%= cart.product.id %>"><img src="/img/products/<%= cart.product.imageCover %>" width="150"></a>
+        <p>Price: <b><%= cart.price %></b></p>
+        <% if(cart.variantName != 'undefined' && cart.variantValue != 'undefined'){ %>
+            <p><%= cart.variantName %>: <b><%= cart.variantValue %></b></p>
+        <% } %>
+        <p>Quantity: <b><%= cart.quantity %></b></p>
+        <% if(cart.imageCover){ %>
+            <br>
+            <br>
+            <p>Your uploaded design:</p>
+            <img src="/img/products/<%= cart.imageCover %>" width="150">
+            <form method="POST" action="/update-order-design" enctype="multipart/form-data">
+                <input type="hidden" name="cartId" value="<%= cart.id %>">
+                <input type="hidden" name="orderId" value="<%= order.id %>">
+                <br>
+                <br>
+                <label id="deleteableLabel" for="imageCover">Change design:</label>
+                <input style="width:250px; margin: 3px auto;" id="imageCover" name="imageCover" type="file" />
+                <input type="submit" value="upload">
+            </form>
+        <% } %>
+        </div>
+    <%})%>
    
     
 <%} %>

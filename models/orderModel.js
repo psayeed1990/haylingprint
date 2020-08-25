@@ -23,8 +23,14 @@ const orderSchema = new Schema({
   address: {
     type: String,
   },
-  completed: Boolean,
-  cancelled: Boolean,
+  completed: {
+    type: Boolean,
+    default: false,
+  },
+  cancelled: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 // populate

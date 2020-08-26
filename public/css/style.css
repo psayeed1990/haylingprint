@@ -527,8 +527,9 @@ footer {
     flex-wrap: wrap;
     grid-template-columns: auto;
     width: 300px;
-    position: absolute;
+    position: fixed;
     background: white;
+    z-index: 998;
   }
   .pure-css-nav > nav ul ul {
     margin-left: 300px;

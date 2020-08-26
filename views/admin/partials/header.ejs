@@ -1,4 +1,4 @@
-<header>
+<header id="header">
     <div>
         <nav class="top-nav">
             <div>
@@ -73,27 +73,6 @@
 </div>
 <script>
     //toggle menu
-        let toggle = document.getElementById('toggle');
-        let mainMenu = document.getElementById('main-menu');
-
-        if (window.innerWidth <= 1200) {
-            mainMenu.style.visibility = 'hidden';
-            mainMenu.style.opacity = '0';
-        }
-
-
-        toggle.addEventListener('click', () => {
-            event.preventDefault();
-
-            if (mainMenu.style.visibility == 'hidden') {
-                mainMenu.style.visibility = 'visible';
-                mainMenu.style.opacity = '1';
-            } else {
-                mainMenu.style.visibility = 'hidden';
-                mainMenu.style.opacity = '0';
-            }
-
-
-        });
+ 
 </script>
 </header>

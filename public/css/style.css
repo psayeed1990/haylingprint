@@ -398,7 +398,6 @@ p.btn {
 .home-heading h1 {
   background: #fff;
   text-transform: uppercase;
-  width: max-content;
   margin: 100px auto 0;
 }
 .text1 {
@@ -459,6 +458,13 @@ p.btn {
 #cart-page {
   padding: 30px;
 }
+
+#processing {
+  width: max-content;
+  padding: 10px;
+  margin: 5px auto;
+  border: 1px solid #eee;
+}
 /*product page front */
 
 /*footer */
@@ -489,9 +495,112 @@ footer {
   box-shadow: 0 0px 20px 0px inset #d5e1df;
   padding: 5px;
 }
-/* Responsive design starts here */
 
-@media only screen and (max-width: 1280px) {
+.toggle-menu {
+  display: none;
+}
+
+/* Responsive design starts here */
+@media only screen and (max-width: 1200px) {
+  .home-heading {
+    padding: 0 20px;
+  }
+  .toggle-menu {
+    display: block;
+    float: left;
+    position: fixed;
+    z-index: 999;
+    background: white;
+    padding: 10px;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 0px #4e4949;
+    transition: background-color 0.5s;
+  }
+  .toggle-menu:hover {
+    background-color: #eee;
+  }
+  #main-menu {
+    transition: visibility 0s, opacity 0.5s linear;
+  }
+  .pure-css-nav > nav ul {
+    display: grid;
+    flex-wrap: wrap;
+    grid-template-columns: auto;
+    width: 300px;
+    position: absolute;
+    background: white;
+  }
+  .pure-css-nav > nav ul ul {
+    margin-left: 300px;
+    margin-top: -50px;
+  }
+  .pure-css-nav > nav ul ul ul {
+    margin-left: 0px;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .home-text-section {
+    grid-template-columns: 46% 46%;
+  }
+  #product-front {
+    grid-template-columns: 48% 48%;
+  }
+  .home-overlay {
+    grid-template-columns: auto;
+  }
+  .right-offer h2 {
+    width: max-content;
+    margin: auto;
+  }
+  .cart-product {
+    grid-template-columns: auto;
+  }
+}
+
+@media only screen and (max-width: 690px) {
+  .right-top-menu {
+    font-size: 0.85em;
+  }
+  .top-nav {
+    grid-template-columns: auto;
+  }
+  #logo {
+    float: none;
+    padding-left: 0;
+  }
+  #logo img {
+    margin-top: 5px;
+  }
+  .right-top-menu {
+    float: none;
+    margin: 10px;
+    padding-right: 0;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .home-text-section {
+    grid-template-columns: auto;
+  }
+  #product-front {
+    grid-template-columns: auto;
+  }
+  .overlay {
+    padding: 30px 0;
+  }
+  .home-offer h2 {
+    font-size: 1.2rem;
+  }
+  h1 {
+    font-size: 1.6rem;
+  }
+  .home-overlay {
+    padding: 0;
+  }
+  #processing {
+    width: auto;
+  }
 }
 
 /* ends responsive design */

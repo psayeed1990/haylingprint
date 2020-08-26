@@ -4,9 +4,11 @@
     <nav class="top-nav">
         <div>
             <a href="/" title="logo" id="logo"><img src='/img/site/logo.jpg' width="150"></a>
+
+            
         </div>
 
-
+        
 
         <div>
             
@@ -42,7 +44,15 @@ Account</a></span>
         </div>
 
     </nav>
-    <div class="main-menu pure-css-nav">
+
+    <div class="toggle-menu" id="toggle">
+        <i style="font-size: 1.4rem;" class="fa fa-bars" aria-hidden="true"></i>
+    
+    </div>
+
+    
+
+    <div id="main-menu" class="main-menu pure-css-nav">
         <nav>
 
             <ul>
@@ -118,6 +128,32 @@ Account</a></span>
 
 </div>
 <script>
+
+    //toggle menu
+        let toggle = document.getElementById('toggle');
+        let mainMenu = document.getElementById('main-menu');
+
+        if(window.innerWidth <= 1200){
+            mainMenu.style.visibility = 'hidden';
+            mainMenu.style.opacity = '0';
+        }
+        
+        
+        toggle.addEventListener('click', ()=>{
+            event.preventDefault();
+
+            if(mainMenu.style.visibility == 'hidden'){
+                mainMenu.style.visibility = 'visible';
+                mainMenu.style.opacity = '1';
+            }else{
+                mainMenu.style.visibility = 'hidden';
+                mainMenu.style.opacity = '0';
+            }
+            
+            
+        });
+
+
 // function allStorage() {
 
 //     var cartValues = [],

@@ -27,7 +27,18 @@
         </div>
 
     </nav>
-    <div class="main-menu pure-css-nav">
+
+    <div class="toggle-menu">
+        <i class="fa fa-bars" aria-hidden="true"></i>
+
+    </div>
+
+        <div class="toggle-menu" id="toggle">
+            <i style="font-size: 1.4rem;" class="fa fa-bars" aria-hidden="true"></i>
+        
+        </div>
+
+    <div id="main-menu" class="main-menu pure-css-nav">
         <nav>
 
             <ul>
@@ -60,5 +71,29 @@
     </div>
 
 </div>
+<script>
+    //toggle menu
+        let toggle = document.getElementById('toggle');
+        let mainMenu = document.getElementById('main-menu');
 
+        if (window.innerWidth <= 1200) {
+            mainMenu.style.visibility = 'hidden';
+            mainMenu.style.opacity = '0';
+        }
+
+
+        toggle.addEventListener('click', () => {
+            event.preventDefault();
+
+            if (mainMenu.style.visibility == 'hidden') {
+                mainMenu.style.visibility = 'visible';
+                mainMenu.style.opacity = '1';
+            } else {
+                mainMenu.style.visibility = 'hidden';
+                mainMenu.style.opacity = '0';
+            }
+
+
+        });
+</script>
 </header>

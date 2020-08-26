@@ -158,6 +158,7 @@ router.post(
         price: selectedVariant[0].price,
         variantName: selectedVariant[0].name,
         variantValue: selectedVariant[0].value,
+        laminatingPrice: req.body.laminatingPrice,
       });
 
       return res.redirect(`/products/${req.body.product}`);

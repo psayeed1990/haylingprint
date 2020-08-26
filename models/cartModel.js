@@ -15,7 +15,7 @@ const cartSchema = new Schema({
   },
 
   SKU: String,
-
+  laminatingPrice: String,
   quantity: {
     type: Number,
     required: true,

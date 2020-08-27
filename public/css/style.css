@@ -473,12 +473,14 @@ p.btn {
 /*product page front */
 
 /*footer */
-footer {
-  display: block;
+.footer {
+  display: grid;
+  grid-template-columns: 20% 20% 20% 20%;
+  grid-gap: 7%;
   position: relative;
   background: #f7f7f7;
   padding: 30px;
-  margin: 250px auto 0;
+  margin: 50px auto 0;
   box-shadow: 0px 0 3px 0px;
 }
 .numbers {
@@ -546,6 +548,10 @@ footer {
 }
 
 @media only screen and (max-width: 1000px) {
+  .footer {
+    grid-template-columns: 46% 46%;
+    margin-top: 150px;
+  }
   .home-text-section {
     grid-template-columns: 46% 46%;
   }
@@ -586,6 +592,13 @@ footer {
 }
 
 @media only screen and (max-width: 500px) {
+  .useful-links {
+    margin-bottom: 150px;
+  }
+  .footer {
+    grid-template-columns: auto;
+    margin-top: 550px;
+  }
   .home-text-section {
     grid-template-columns: auto;
   }

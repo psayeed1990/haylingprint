@@ -59,12 +59,18 @@ exports.createOne = (Model) =>
 
     const doc = await Model.create(req.body);
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        data: doc,
-      },
-    });
+    if (Model === Product) {
+      return res.render('admin/product', {
+        message: 'New product created',
+        layout: 'layoutAdmin',
+      });
+    }
+    if (Model === Category) {
+      return res.render('admin/category', {
+        message: 'New category created',
+        layout: 'layoutAdmin',
+      });
+    }
   });
 
 exports.getOne = (Model, popOptions) =>

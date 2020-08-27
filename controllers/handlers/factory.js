@@ -60,13 +60,13 @@ exports.createOne = (Model) =>
     const doc = await Model.create(req.body);
 
     if (Model === Product) {
-      return res.render('admin/product', {
+      return res.render('admin/products', {
         message: 'New product created',
         layout: 'layoutAdmin',
       });
     }
     if (Model === Category) {
-      return res.render('admin/category', {
+      return res.render('admin/categories', {
         message: 'New category created',
         layout: 'layoutAdmin',
       });

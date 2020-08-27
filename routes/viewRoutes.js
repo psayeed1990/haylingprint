@@ -58,6 +58,18 @@ router.get('/login', (req, res) => {
   res.render('auth/login');
 });
 
+router.get('/forget-password', async (req, res) => {
+  res.render('auth/forgetPassword', {
+    message: 'Put your email address to get a password reset link',
+  });
+});
+
+router.post('/forget-password', authController.forgotPassword);
+router.get('/resetPassword/:token', (req, res) => {
+  res.render('auth/resetPassword', { message: 'Please provide new password' });
+});
+router.post('/resetPassword', authController.resetPassword);
+
 router.get('/about', (req, res) => {
   res.render('about');
 });
@@ -215,8 +227,8 @@ router.post('/pay', async (req, res) => {
       payment_method: 'paypal',
     },
     redirect_urls: {
-      return_url: 'http://localhost:5000/success',
-      cancel_url: 'http://localhost:5000/cancell',
+      return_url: `${req.protocol}://${req.get('host')}/success`,
+      cancel_url: `${req.protocol}://${req.get('host')}/cancell`,
     },
     transactions: [
       {

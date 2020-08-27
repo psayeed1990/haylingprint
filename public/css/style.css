@@ -13,7 +13,8 @@ body {
   text-align: center;
 }
 .button,
-button {
+button,
+input[type='submit'] {
   cursor: pointer;
 }
 /*start header codes */

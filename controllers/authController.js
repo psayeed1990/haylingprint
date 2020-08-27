@@ -134,7 +134,7 @@ exports.logout = (req, res) => {
     expires: new Date(Date.now() + 10 * 1000),
     httpOnly: true,
   });
-  res.status(200).json({ status: 'success' });
+  res.redirect('/');
 };
 
 exports.protect = catchAsync(async (req, res, next) => {
@@ -234,7 +234,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
   const user = await User.findOne({ email: req.body.email });
   if (!user) {
-    return next(new AppError('There is no user with email address.', 404));
+    return res.render('auth/forgetPassword', {
+      message: `No user found with this email address: ${req.body.email}`,
+    });
   }
 
   // 2) Generate the random reset token
@@ -245,22 +247,20 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   try {
     const resetURL = `${req.protocol}://${req.get(
       'host'
-    )}/api/v1/users/resetPassword/${resetToken}`;
+    )}/resetPassword/${resetToken}`;
     await new Email(user, resetURL).sendPasswordReset();
 
-    res.status(200).json({
-      status: 'success',
-      message: 'Token sent to email!',
+    return res.render('auth/forgetPassword', {
+      message: 'A email with reset link sent to your address',
     });
   } catch (err) {
     user.passwordResetToken = undefined;
     user.passwordResetExpires = undefined;
     await user.save({ validateBeforeSave: false });
 
-    return next(
-      new AppError('There was an error sending the email. Try again later!'),
-      500
-    );
+    return res.render('auth/forgetPassword', {
+      message: 'Email could not sent. A error occured',
+    });
   }
 });
 
@@ -278,7 +278,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   // 2) If token has not expired, and there is user, set the new password
   if (!user) {
-    return next(new AppError('Token is invalid or has expired', 400));
+    return res.render('auth/resetPassword', { message: 'Link expired' });
   }
   user.password = req.body.password;
   user.passwordConfirm = req.body.passwordConfirm;

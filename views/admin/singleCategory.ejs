@@ -4,8 +4,8 @@
             <input type="text" placeholder="Category name" name="name" value="<%= category.name %>">
             <input type="text" placeholder="slug" name="slug" value="<%= category.slug %>">
             <% if(typeof categories != 'undefined'){ %>
-                <% if(category.parentCategory.name){ %>
-                    <p>Parent Category: <%= category.parentCategory %></p>
+                <% if(category.parentCategory){ %>
+                    <p>Parent Category: <%= category.parentCategory.name %></p>
                 <% } %>
             
             <select name="parentCategory" id="reservedtable">

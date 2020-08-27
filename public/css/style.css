@@ -12,6 +12,10 @@ body {
   height: 100vh;
   text-align: center;
 }
+.button,
+button {
+  cursor: pointer;
+}
 /*start header codes */
 
 #logo {

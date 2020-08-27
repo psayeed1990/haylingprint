@@ -2,9 +2,9 @@
     <div id="cart-page">
         <% if(typeof carts != 'undefined') {%>
             <%for(var i = 0; i < carts.length; i++) { %>  
-                <% if(carts[i].ordered === false){ %>                
+                <% if(carts[i].ordered === false && carts[i].product.id){ %>                
                 <div id="cart">
-
+                    
                     <div class="cart-product">
                         <a href="/products/<%= carts[i].product.id %>"><img src="/img/products/<%= carts[i].product.imageCover %>" width="100"></a>
                         <a href="/products/<%= carts[i].product.id %>"><p><%= carts[i].product.name %> | <%= carts[i].variantName %> | <%= carts[i].variantValue %></p></a>

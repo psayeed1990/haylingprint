@@ -34,7 +34,7 @@ const sendToken = (user, statusCode, req, res, origin) => {
   //     user,
   //   },
   // });
-  res.redirect(req.body.origin || '/account');
+  return res.redirect(req.body.origin || '/account');
 };
 
 //sign up
@@ -42,7 +42,9 @@ exports.signup = catchAsync(async (req, res, next) => {
   //check if email already exist
   const oldUser = await User.findOne({ email: req.body.email });
   if (oldUser) {
-    return res.status(400).json({ message: 'Email already exists' });
+    return res.render('auth/login', {
+      message: 'Email already exists. Please login',
+    });
   }
 
   //create new user
@@ -51,22 +53,22 @@ exports.signup = catchAsync(async (req, res, next) => {
     email: req.body.email,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
+    phone: req.body.phone,
+    address: req.body.address,
+    emailVerified: true,
+    expire_at: undefined,
   });
 
   //generate jwt token to verify email
-  const EmailVerifyToken = await createToken(newUser._id);
+  //const EmailVerifyToken = await createToken(newUser._id);
 
   //verification url
-  const url = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/email-verify/${EmailVerifyToken}`;
+  // const url = `${req.protocol}://${req.get(
+  //   'host'
+  // )}/api/v1/users/email-verify/${EmailVerifyToken}`;
 
-  //send verification email
-  //await new Email(newUser, url).sendEmailVerify();
-
-  res.status(200).json({
-    url,
-  });
+  // await new Email(newUser, url).sendEmailVerify();
+  sendToken(newUser, 200, req, res);
 });
 
 exports.verifyEmail = catchAsync(async (req, res, next) => {
@@ -84,28 +86,25 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
 
   //if user not found
   if (!currentUser) {
-    return next(
-      new AppError(
-        'The user belonging to this token does no longer exist.',
-        401
-      )
-    );
+    return res.render('404', { message: 'User no longer exists' });
   }
 
   //if already verifies
   if (currentUser.emailVerified === true) {
-    return next(new AppError('Already verified', 401));
+    return res.render('user/account', { message: 'Already verified' });
   }
 
   if (currentUser.expire_at <= Date.now()) {
-    return next(new AppError('Time expired', 401));
+    return res.render('404', {
+      message: 'Time expired. User deleted. Signup Again',
+    });
   }
 
   //set verification to true;
   currentUser.emailVerified = true;
   currentUser.expire_at = undefined;
   await currentUser.save({ validateBeforeSave: false });
-  res.send('User verified');
+  res.render('user/account', { message: 'User verified' });
 });
 
 //login
@@ -113,16 +112,22 @@ exports.login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
-    return next(new AppError('Please provide email and password', 400));
+    return res.render('auth/login', {
+      message: 'Please provide email and password',
+    });
   }
 
   const user = await User.findOne({ email }).select('+password');
   if (!user) {
-    res.send('Use not found');
+    return res.render('auth/login', {
+      message: 'No user found with this email. Please register',
+    });
   }
 
   if (!user || !(await user.correctPassword(password, user.password))) {
-    return next(new AppError('Email or password incorrect', 401));
+    return res.render('auth/login', {
+      message: 'Email or password incorrect',
+    });
   }
 
   sendToken(user, 200, req, res);
@@ -221,9 +226,7 @@ exports.restrictTo = (...roles) => {
   return (req, res, next) => {
     // roles ['admin', 'lead-guide']. role='user'
     if (!roles.includes(req.user.role)) {
-      return next(
-        new AppError('You do not have permission to perform this action', 403)
-      );
+      return res.send('Not your territoty. Only a admin can access this');
     }
 
     next();

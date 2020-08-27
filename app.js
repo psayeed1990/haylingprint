@@ -73,7 +73,9 @@ app.use('/api/v1/categories', categoryRoutes);
 app.use('/', require('./routes/viewRoutes'));
 //404
 app.all('*', (req, res, next) => {
-  next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+  res.render('404', {
+    message: `Can't find ${req.originalUrl} on this server!`,
+  });
 });
 //global error handler
 app.use(globalErrorHandler);

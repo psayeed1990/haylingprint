@@ -115,31 +115,34 @@ router.get('/contact-us', (req, res) => {
 
 //for user only
 
-router.use(authController.protect);
-
-router.get('/account', (req, res) => {
+router.get('/account', authController.protect, (req, res) => {
   res.render('user/account');
 });
 router.get('/account/details', (req, res) => {
   res.render('user/accountDetails');
 });
 
-router.post('/account/details', userController.updateMe);
+router.post(
+  '/account/details',
+  authController.protect,
+  userController.updateMe
+);
 
-router.get('/cart', async (req, res) => {
+router.get('/cart', authController.protect, async (req, res) => {
   const carts = await Cart.find({ user: req.user.id });
 
   res.render('cart', { carts });
 });
-router.get('/add-to-cart', (req, res) => {
+router.get('/add-to-cart', authController.protect, (req, res) => {
   res.render('products', { error: 'Now add to cart' });
 });
-router.post('/update-cart', async (req, res) => {
+router.post('/update-cart', authController.protect, async (req, res) => {
   await Cart.findByIdAndDelete(req.body.id);
   res.redirect('/cart');
 });
 router.post(
   '/add-to-cart',
+  authController.protect,
   productController.uploadProductImages,
   productController.resizeProductImages,
   async (req, res) => {
@@ -196,12 +199,12 @@ router.post(
   }
 );
 
-router.get('/checkout', async (req, res) => {
+router.get('/checkout', authController.protect, async (req, res) => {
   const carts = await Cart.find({ user: req.user.id });
   res.render('checkout', { carts });
 });
 
-router.post('/pay', async (req, res) => {
+router.post('/pay', authController.protect, async (req, res) => {
   const carts = await Cart.find({ user: req.user.id });
 
   if (!carts) {
@@ -259,7 +262,7 @@ router.post('/pay', async (req, res) => {
   });
 });
 
-router.get('/success', async (req, res) => {
+router.get('/success', authController.protect, async (req, res) => {
   const payerId = req.params.PayerID;
   const paymentId = req.params.PaymentID;
 
@@ -323,13 +326,14 @@ router.get('/success', async (req, res) => {
 //   res.redirect(`/orders/${newOrder.id}`);
 // });
 
-router.get('/cancell', (req, res) => {
+router.get('/cancell', authController.protect, (req, res) => {
   res.send("didn't happen");
 });
 
 //update order design
 router.post(
   '/update-order-design',
+  authController.protect,
   productController.uploadProductImages,
   productController.resizeProductImages,
   async (req, res) => {
@@ -343,7 +347,7 @@ router.post(
   }
 );
 
-router.get('/orders', async (req, res) => {
+router.get('/orders', authController.protect, async (req, res) => {
   const orders = await Order.find({
     user: req.user.id,
     completed: { $ne: true },
@@ -351,13 +355,13 @@ router.get('/orders', async (req, res) => {
 
   res.render('user/orders', { orders });
 });
-router.get('/orders/:id', async (req, res) => {
+router.get('/orders/:id', authController.protect, async (req, res) => {
   const order = await Order.findById(req.params.id).populate('carts');
 
   res.render('user/singleOrder', { order });
 });
 
-router.get('/orders/completed', async (req, res) => {
+router.get('/orders/completed', authController.protect, async (req, res) => {
   const orders = await Order.find({
     user: req.user.id,
     completed: true,
@@ -367,42 +371,56 @@ router.get('/orders/completed', async (req, res) => {
 });
 
 //admin only
-router.use(authController.restrictTo('admin'));
 
 //search order
-router.post('/admin/search/orders', async (req, res) => {
-  const user = await User.findOne({ phone: req.body.phone });
-  if (!user) {
-    return res.render('admin/searchOrders', {
+router.post(
+  '/admin/search/orders',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const user = await User.findOne({ phone: req.body.phone });
+    if (!user) {
+      return res.render('admin/searchOrders', {
+        layout: 'layoutAdmin',
+        orders,
+        phone: req.body.phone,
+      });
+    }
+    const orders = await Order.find({ user: user.id });
+    res.render('admin/searchOrders', {
       layout: 'layoutAdmin',
       orders,
       phone: req.body.phone,
     });
   }
-  const orders = await Order.find({ user: user.id });
-  res.render('admin/searchOrders', {
-    layout: 'layoutAdmin',
-    orders,
-    phone: req.body.phone,
-  });
-});
+);
 
 //order processing
-router.get('/admin/orders/:id', async (req, res) => {
-  const order = await Order.findById(req.params.id).populate('carts');
+router.get(
+  '/admin/orders/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const order = await Order.findById(req.params.id).populate('carts');
 
-  res.render('admin/singleOrder', { layout: 'layoutAdmin', order });
-});
+    res.render('admin/singleOrder', { layout: 'layoutAdmin', order });
+  }
+);
 
-router.post('/admin/orders/:id', async (req, res) => {
-  const updatedOrder = await Order.findByIdAndUpdate(
-    req.body.id,
-    { completed: true },
-    { new: true }
-  );
+router.post(
+  '/admin/orders/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.body.id,
+      { completed: true },
+      { new: true }
+    );
 
-  res.redirect(`/admin/orders/${updatedOrder.id}`);
-});
+    res.redirect(`/admin/orders/${updatedOrder.id}`);
+  }
+);
 
 // router.get('/admin/orders/completed', async (req, res) => {
 //   const orders = await Order.find();
@@ -410,144 +428,230 @@ router.post('/admin/orders/:id', async (req, res) => {
 //   res.render('admin/ordersCompleted', { layout: 'layoutAdmin', orders });
 // });
 
-router.get('/admin/orders', async (req, res) => {
-  const orders = await Order.find({
-    completed: { $ne: true },
-  });
+router.get(
+  '/admin/orders',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const orders = await Order.find({
+      completed: { $ne: true },
+    });
 
-  res.render('admin/orders', { layout: 'layoutAdmin', orders });
-});
+    res.render('admin/orders', { layout: 'layoutAdmin', orders });
+  }
+);
 
 //dashboard
-router.get('/admin', async (req, res) => {
-  const orders = await Order.find({ completed: { $ne: true } });
-  res.render('admin/dashboard', { orders, layout: 'layoutAdmin' });
-});
+router.get(
+  '/admin',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const orders = await Order.find({ completed: { $ne: true } });
+    res.render('admin/dashboard', { orders, layout: 'layoutAdmin' });
+  }
+);
 
-router.get('/admin/products', async (req, res) => {
-  let filter = {};
-  if (req.params.productId) filter = { product: req.params.productId };
+router.get(
+  '/admin/products',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    let filter = {};
+    if (req.params.productId) filter = { product: req.params.productId };
 
-  const features = new APIFeatures(Product.find(filter), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
-  // const doc = await features.query.explain();
-  const doc = await features.query;
-  res.render('admin/products', { layout: 'layoutAdmin', doc });
-});
+    const features = new APIFeatures(Product.find(filter), req.query)
+      .filter()
+      .sort()
+      .limitFields()
+      .paginate();
+    // const doc = await features.query.explain();
+    const doc = await features.query;
+    res.render('admin/products', { layout: 'layoutAdmin', doc });
+  }
+);
 
-router.get('/admin/products/:id', async (req, res) => {
-  const product = await Product.findById(req.params.id);
+router.get(
+  '/admin/products/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const product = await Product.findById(req.params.id);
 
-  res.render('admin/singleProduct', { product, layout: 'layoutAdmin' });
-});
+    res.render('admin/singleProduct', { product, layout: 'layoutAdmin' });
+  }
+);
 
 router.post(
   '/admin/products/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
   productController.uploadProductImages,
   productController.resizeProductImages,
   productController.updateProduct
 );
-router.get('/admin/add-product', async (req, res) => {
-  //const categories = await Category.find();
-  res.render('addProduct', { layout: 'layoutAdmin' });
-});
+router.get(
+  '/admin/add-product',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    //const categories = await Category.find();
+    res.render('addProduct', { layout: 'layoutAdmin' });
+  }
+);
 
-router.post('/admin/products/delete/:id', productController.deleteProduct);
+router.post(
+  '/admin/products/delete/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  productController.deleteProduct
+);
 
 //variants
 
-router.get('/admin/add-variants', (req, res) => {
-  res.render('admin/addVariant', { layout: 'layoutAdmin' });
-});
-
-router.post('/admin/add-variants', async (req, res) => {
-  const product = await Product.findOneAndUpdate(
-    { SKU: req.body.product },
-    {
-      $push: {
-        variants: {
-          base: req.body.base,
-          name: req.body.name,
-          value: req.body.value,
-          SKU: req.body.SKU,
-          stock: req.body.stock,
-          price: req.body.price,
-        },
-      },
-    }
-  );
-  if (product) {
-    return res.redirect(`/admin/products/${product.id}`);
+router.get(
+  '/admin/add-variants',
+  authController.protect,
+  authController.restrictTo('admin'),
+  (req, res) => {
+    res.render('admin/addVariant', { layout: 'layoutAdmin' });
   }
-});
+);
 
-router.get('/admin/add-category', async (req, res) => {
-  //const categories = await Category.find();
-  res.render('addCategory', { layout: 'layoutAdmin' });
-});
-router.get('/admin/categories', async (req, res) => {
-  //const categories = await Category.find();
-  res.render('admin/categories', { layout: 'layoutAdmin' });
-});
+router.post(
+  '/admin/add-variants',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const product = await Product.findOneAndUpdate(
+      { SKU: req.body.product },
+      {
+        $push: {
+          variants: {
+            base: req.body.base,
+            name: req.body.name,
+            value: req.body.value,
+            SKU: req.body.SKU,
+            stock: req.body.stock,
+            price: req.body.price,
+          },
+        },
+      }
+    );
+    if (product) {
+      return res.redirect(`/admin/products/${product.id}`);
+    }
+  }
+);
 
-router.get('/admin/category/:id', async (req, res) => {
-  const category = await Category.findById(req.params.id);
+router.get(
+  '/admin/add-category',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    //const categories = await Category.find();
+    res.render('addCategory', { layout: 'layoutAdmin' });
+  }
+);
+router.get(
+  '/admin/categories',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    //const categories = await Category.find();
+    res.render('admin/categories', { layout: 'layoutAdmin' });
+  }
+);
 
-  res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
-});
+router.get(
+  '/admin/category/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const category = await Category.findById(req.params.id);
 
-router.post('/admin/category/:id', async (req, res) => {
-  const category = await Category.findByIdAndUpdate(
-    req.params.id,
-    {
-      name: req.body.name,
-      parentCategory: req.body.parentCategory,
-      slug: req.body.slug,
-    },
-    { new: true }
-  );
+    res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
+  }
+);
 
-  res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
-});
+router.post(
+  '/admin/category/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const category = await Category.findByIdAndUpdate(
+      req.params.id,
+      {
+        name: req.body.name,
+        parentCategory: req.body.parentCategory,
+        slug: req.body.slug,
+      },
+      { new: true }
+    );
 
-router.get('/admin/home', async (req, res) => {
-  const homes = await Home.find();
-  const url = `${req.protocol}://${req.get('host')}`;
-  res.render('admin/adminHome', { layout: 'layoutAdmin', homes, url });
-});
+    res.render('admin/singleCategory', { layout: 'layoutAdmin', category });
+  }
+);
 
-router.post('/admin/home', async (req, res) => {
-  const url = `${req.protocol}://${req.get('host')}/products/`;
-  const getlink = req.body.link;
-  const link = getlink.toString().replace(url, '');
-
-  const product = await Product.findById({ _id: link });
-
-  if (product) {
-    //write error message here
+router.get(
+  '/admin/home',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
     const homes = await Home.find();
     const url = `${req.protocol}://${req.get('host')}`;
-    return res.render('admin/adminHome', { layout: 'layoutAdmin', homes, url });
+    res.render('admin/adminHome', { layout: 'layoutAdmin', homes, url });
   }
+);
 
-  const newLink = await Home.create({ link });
+router.post(
+  '/admin/home',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const url = `${req.protocol}://${req.get('host')}/products/`;
+    const getlink = req.body.link;
+    const link = getlink.toString().replace(url, '');
 
-  res.redirect('/admin/home');
-});
+    const product = await Product.findById({ _id: link });
 
-router.get('/admin/home/:id', async (req, res) => {
-  const home = await Home.findById(req.params.id);
-  res.render('admin/singleHomeLink', { layout: 'layoutAdmin', home });
-});
+    if (product) {
+      //write error message here
+      const homes = await Home.find();
+      const url = `${req.protocol}://${req.get('host')}`;
+      return res.render('admin/adminHome', {
+        layout: 'layoutAdmin',
+        homes,
+        url,
+      });
+    }
 
-router.post('/admin/home/delete/:id', async (req, res) => {
-  const id = req.params.id;
-  const doc = await Home.findByIdAndDelete(id);
+    const newLink = await Home.create({ link });
 
-  res.redirect('/admin/home');
-});
+    res.redirect('/admin/home');
+  }
+);
+
+router.get(
+  '/admin/home/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const home = await Home.findById(req.params.id);
+    res.render('admin/singleHomeLink', { layout: 'layoutAdmin', home });
+  }
+);
+
+router.post(
+  '/admin/home/delete/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const id = req.params.id;
+    const doc = await Home.findByIdAndDelete(id);
+
+    res.redirect('/admin/home');
+  }
+);
 
 module.exports = router;

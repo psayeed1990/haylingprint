@@ -19,7 +19,41 @@
             <% } %>
 
             <input type="submit" value="Update Category">
+            
 
         </form>
+
+        <div id="delete-btn">delete category </div>
+        <div class="del-wrapper">
+            <div id="answer">
+                <form method="POST" action="/admin/category/delete/<%= category.id %>">
+                    <input type="submit" id="yes" value="yes">
+                </form>
+        
+                <p id="no">no</p>
+            </div>
+        </div>
+        
+        <script>
+            let answer = document.getElementById('answer');
+            let yes = document.getElementById('yes');
+            let no = document.getElementById('no');
+            let deleteBtn = document.getElementById('delete-btn')
+
+            answer.style.display = 'none';
+
+            deleteBtn.addEventListener('click', deleteFunction);
+            no.addEventListener('click', deleteFunction);
+
+            function deleteFunction(e) {
+                e.preventDefault();
+                if (answer.style.display === 'none') {
+                    answer.style.display = 'block';
+                }
+                else {
+                    answer.style.display = 'none';
+                }
+            }
+        </script>
     <% } %>
 </div>

@@ -593,6 +593,18 @@ router.post(
   }
 );
 
+router.post(
+  '/admin/category/delete/:id',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const category = await Category.find();
+    await Category.findByIdAndDelete(req.params.id);
+
+    res.render('admin/categories', { message: 'Category deleted' });
+  }
+);
+
 router.get(
   '/admin/home',
   authController.protect,

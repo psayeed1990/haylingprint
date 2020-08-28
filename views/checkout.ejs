@@ -16,7 +16,7 @@
             <p>Total Price: <%= totalPrice %></p>
 
 
-            <form method="POST" action="/pay">
+            <form method="POST" action="/test-order">
                 <input type="hidden" value="" name="id">
                 <input type="hidden" value="<%= totalPrice %>" name="amount">
                 <input type="text" placeholder="Name" value="<%= user.name %>" name="name" required>

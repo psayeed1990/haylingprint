@@ -5,9 +5,7 @@ window.onload = function () {
     let variableForm = document.getElementById('variable-form');
     let baseName = document.getElementById('base-name');
     let price = document.querySelector('span#price');
-    let stock = document.querySelector('span#stock');
     let SKU = document.getElementById('sku');
-    let quantity = document.getElementById('quantity');
 
     let baseVariants = variants.filter((variant) => variant.base === '');
 
@@ -22,9 +20,8 @@ window.onload = function () {
 
       function changeContent() {
         price.innerHTML = baseVariants[i].price;
-        stock.innerHTML = baseVariants[i].stock;
+
         sku.value = baseVariants[i].SKU;
-        quantity.max = baseVariants[i].stock;
 
         let secondLevel = variants.filter(
           (variant) => variant.base === baseVariants[i].SKU
@@ -64,9 +61,8 @@ window.onload = function () {
 
           function changeSecContent() {
             price.innerHTML = secondLevel[j].price;
-            stock.innerHTML = secondLevel[j].stock;
+
             sku.value = secondLevel[j].SKU;
-            quantity.max = secondLevel[j].stock;
 
             let thirdLevel = variants.filter(
               (variant) => variant.base === secondLevel[j].SKU
@@ -118,9 +114,8 @@ window.onload = function () {
 
               function changeThirdContent() {
                 price.innerHTML = thirdLevel[k].price;
-                stock.innerHTML = thirdLevel[k].stock;
+
                 sku.value = thirdLevel[k].SKU;
-                quantity.max = thirdLevel[k].stock;
               }
             }
           }

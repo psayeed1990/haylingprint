@@ -542,7 +542,6 @@ router.post(
             name: req.body.name,
             value: req.body.value,
             SKU: req.body.SKU,
-            stock: req.body.stock,
             price: req.body.price,
           },
         },

@@ -48,11 +48,11 @@
 
     
         <p>Price: <span id="price"><%= product.price %></span></p>
-        <p>Stock Left:<span id="stock"><%= product.stock %></span></p>
+        
     
         <form action="/add-to-cart" method="POST" enctype="multipart/form-data">
             <label style="display: inline;">Quantity: </label> <input id="quantity" name="quantity" type="number"
-                style="width: 40px; display: inline;" max="<%= product.stock %>" min="1" required>
+                style="width: 40px; display: inline;" min="1" required>
             <input type="hidden" id="product-id" name="product" value="<%= product.id%>">
             <input type="hidden" id="sku" name="SKU" value="<%= product.SKU %>">
             

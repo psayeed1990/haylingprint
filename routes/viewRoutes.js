@@ -15,6 +15,7 @@ const Order = require('./../models/orderModel');
 const { route } = require('./userRoutes');
 const { findByIdAndUpdate } = require('./../models/categoryModel');
 const paypal = require('paypal-rest-sdk');
+const Quote = require('./../models/quickQuoteModel');
 
 router.use(authController.isLoggedIn);
 
@@ -39,6 +40,15 @@ const categoriesFunction = async (req, res, next) => {
 };
 
 router.use(categoriesFunction);
+
+//contact form
+router.post('/contact', async (req, res) => {
+  const newQuote = await Quote.create(req.body);
+  res.render('contact', {
+    message: 'A message is sent. We will reply in a minute',
+  });
+});
+
 router.get('/', async (req, res) => {
   const homeLinks = await Home.find();
 
@@ -663,6 +673,17 @@ router.post(
     const doc = await Home.findByIdAndDelete(id);
 
     res.redirect('/admin/home');
+  }
+);
+
+router.get(
+  '/client-queries',
+  authController.protect,
+  authController.restrictTo('admin'),
+  async (req, res) => {
+    const queries = await Quote.find();
+
+    res.render('admin/clientQueries', { layout: 'layoutAdmin', queries });
   }
 );
 

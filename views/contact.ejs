@@ -1,7 +1,8 @@
 <div class="quick-quote-wrapper">
 
     <h2>Ask for a quick quote</h2>
-    <form class="form quick-quote">
+    <p class="error"><%= typeof message != 'undefined' ? message : '' %></p>
+    <form method="POST" class="form quick-quote" action="/contact">
         <input type="text" name="name" placeholder="Full Name">
         <input type="email" name="email" placeholder="Put your email">
         <input type="text" name="phone" placeholder="Phone Number">

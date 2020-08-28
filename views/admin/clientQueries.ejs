@@ -1,0 +1,12 @@
+<div id="page">
+    <% if(typeof queries != 'undefined'){ %>
+        <% queries.forEach(query => { %>
+            <div class="single-product">
+                <p><span class="query">Name:</span> <b><%= query.name %></b></p>
+                <p><span class="query">Email:</span> <b><%= query.email %></b></p>
+                <p><span class="query">Phone:</span> <b><%= query.phone %></b></p>
+                <p><span class="query">Query:</span> <b><%= query.description %></b></p>
+            </div>
+        <% }) %>
+    <% } %>
+</div>

@@ -310,7 +310,11 @@ p.btn {
 #page {
   font-family: 'roboto';
 }
-
+.query {
+  background-color: #dfdddb;
+  padding: 4px;
+  color: #6fa2ae;
+}
 .home-overlay {
   display: grid;
   grid-template-columns: 60% 40%;

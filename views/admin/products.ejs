@@ -16,8 +16,10 @@
                         <p><%= counter %></p>
                         <img src="/img/products/<%= product.imageCover %>" width="50">
                         <p><%= product.name %></p>
-
-                        <p>cat: <%= product.category.name %></p>
+                        <% if (product.category) { %>
+                            <p>cat: <%= product.category.name %></p>
+                        <% } %>
+                        
                      
                         <p>Stock Left: <%= product.stock %></p>
                         

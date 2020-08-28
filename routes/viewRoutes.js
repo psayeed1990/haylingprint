@@ -309,7 +309,10 @@ router.get('/success', authController.protect, async (req, res) => {
       console.log(error.response);
       throw error;
     } else {
-      const carts = await Cart.find({ user: req.user.id });
+      const carts = await Cart.find({
+        user: req.user.id,
+        active: { $ne: true },
+      });
 
       let cartsId = [];
       for (var i = 0; i < carts.length; i++) {
@@ -331,7 +334,7 @@ router.get('/success', authController.protect, async (req, res) => {
 
 //test order
 // router.post('/test-order', async (req, res) => {
-//   const carts = await Cart.find({ user: req.user.id });
+//   const carts = await Cart.find({ user: req.user.id, active: { $ne: true } });
 
 //   let cartsId = [];
 //   for (var i = 0; i < carts.length; i++) {

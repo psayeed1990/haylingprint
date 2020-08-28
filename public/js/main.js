@@ -11,7 +11,7 @@ window.onload = function () {
 
     baseVariants.forEach((variant) => {
       baseName.innerHTML = variant.name + ': ';
-      variableForm.innerHTML += `<input class="base-radio" style="width: 40px; display: inline;" type="radio" name="baseVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label>`;
+      variableForm.innerHTML += `<div style="padding-left: 40px;"><input class="base-radio" style="width: 40px; display: inline;" type="radio" name="baseVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
     });
 
     let baseRadioClass = document.getElementsByClassName('base-radio');
@@ -51,7 +51,7 @@ window.onload = function () {
 
         secondLevel.forEach((variant) => {
           secondLevelName.innerHTML = variant.name + ': ';
-          secondLevelForm.innerHTML += `<input class="second-radio" style="width: 40px; display: inline;" type="radio" name="secondVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label>`;
+          secondLevelForm.innerHTML += `<div style="padding-left: 40px;"><input class="second-radio" style="width: 40px; display: inline;" type="radio" name="secondVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
         });
 
         let secondRadioClass = document.getElementsByClassName('second-radio');
@@ -102,7 +102,7 @@ window.onload = function () {
 
             thirdLevel.forEach((variant) => {
               thirdLevelName.innerHTML = variant.name + ': ';
-              thirdLevelForm.innerHTML += `<input class="third-radio" style="width: 40px; display: inline;" type="radio" name="thirdVariableName" value="${variant.value}" required><label style="width: 40px; display: inline;">${variant.value}</label>`;
+              thirdLevelForm.innerHTML += `<div style="padding-left: 40px;"><input class="third-radio" style="width: 40px; display: inline;" type="radio" name="thirdVariableName" value="${variant.value}" required><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
             });
 
             let thirdRadioClass = document.getElementsByClassName(

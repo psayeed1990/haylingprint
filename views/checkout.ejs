@@ -8,7 +8,7 @@
             <% let totalPrice = 0 %>
             <%for(var i = 0; i < carts.length; i++) { %>
                 <% cartCount += carts[i].quantity %>
-                <% carts[i].price += carts[i].laminatingPrice %>
+                
                 <% totalPrice += (carts[i].quantity * carts[i].price) %>
             <% } %>
             <p>Total quantity: <%= cartCount %></p>

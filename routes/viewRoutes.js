@@ -173,18 +173,31 @@ router.post(
       const selectedVariant = selectedProduct.variants.filter(
         (variant) => variant.SKU === req.body.SKU
       );
-
-      const newCart = await Cart.create({
-        user: req.user.id,
-        product: req.body.product,
-        quantity: req.body.quantity,
-        imageCover: req.body.imageCover,
-        SKU: req.body.SKU,
-        price: selectedVariant[0].price,
-        variantName: selectedVariant[0].name,
-        variantValue: selectedVariant[0].value,
-        laminatingPrice: req.body.laminatingPrice,
-      });
+      if (req.body.laminatingPrice) {
+        const newCart = await Cart.create({
+          user: req.user.id,
+          product: req.body.product,
+          quantity: req.body.quantity,
+          imageCover: req.body.imageCover,
+          SKU: req.body.SKU,
+          price: selectedVariant[0].price + selectedProduct.laminatingPrice,
+          variantName: selectedVariant[0].name,
+          variantValue: selectedVariant[0].value,
+          laminatingPrice: req.body.laminatingPrice,
+        });
+      }
+      if (!req.body.laminatingPrice) {
+        const newCart = await Cart.create({
+          user: req.user.id,
+          product: req.body.product,
+          quantity: req.body.quantity,
+          imageCover: req.body.imageCover,
+          SKU: req.body.SKU,
+          price: selectedVariant[0].price,
+          variantName: selectedVariant[0].name,
+          variantValue: selectedVariant[0].value,
+        });
+      }
 
       return res.redirect(`/products/${req.body.product}`);
     }

@@ -39,7 +39,7 @@ const productSchema = new Schema(
       type: String,
       trim: true,
     },
-    laminatingPrice: String,
+    laminatingPrice: Number,
     slug: String,
     SKU: String,
     priceDiscount: {

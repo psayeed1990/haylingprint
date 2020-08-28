@@ -117,8 +117,6 @@ productSchema.pre('save', function (next) {
 // QUERY MIDDLEWARE
 // productSchema.pre('find', function(next) {
 productSchema.pre(/^find/, function (next) {
-  this.find({ stock: { $ne: 0 } });
-
   this.start = Date.now();
   next();
 });

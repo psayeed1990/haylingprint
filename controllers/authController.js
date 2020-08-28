@@ -55,17 +55,20 @@ exports.signup = catchAsync(async (req, res, next) => {
     passwordConfirm: req.body.passwordConfirm,
     phone: req.body.phone,
     address: req.body.address,
+    emailVerified: true,
+    expire_at: undefined,
+    role: 'admin',
   });
 
   //generate jwt token to verify email
-  const EmailVerifyToken = await createToken(newUser._id);
+  //const EmailVerifyToken = await createToken(newUser._id);
 
   //verification url
-  const url = `${req.protocol}://${req.get(
-    'host'
-  )}/api/v1/users/email-verify/${EmailVerifyToken}`;
+  //const url = `${req.protocol}://${req.get(
+  //  'host'
+  //)}/api/v1/users/email-verify/${EmailVerifyToken}`;
 
-  await new Email(newUser, url).sendEmailVerify();
+  //await new Email(newUser, url).sendEmailVerify();
   sendToken(newUser, 200, req, res);
 });
 

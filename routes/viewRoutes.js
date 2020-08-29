@@ -223,12 +223,12 @@ router.post(
 );
 
 router.get('/checkout', authController.protect, async (req, res) => {
-  const carts = await Cart.find({ user: req.user.id });
+  const carts = await Cart.find({ user: req.user.id, ordered: { $ne: true } });
   res.render('checkout', { carts });
 });
 
 router.post('/pay', authController.protect, async (req, res) => {
-  const carts = await Cart.find({ user: req.user.id });
+  const carts = await Cart.find({ user: req.user.id, ordered: { $ne: true } });
 
   if (!carts) {
     return res.redirect('/products');
@@ -239,7 +239,7 @@ router.post('/pay', authController.protect, async (req, res) => {
     let item = {
       name: cart.product.name,
       sku: cart.SKU,
-      price: cart.product.price,
+      price: cart.price,
       currency: 'GBP',
       quantity: cart.quantity,
     };
@@ -311,7 +311,7 @@ router.get('/success', authController.protect, async (req, res) => {
     } else {
       const carts = await Cart.find({
         user: req.user.id,
-        active: { $ne: true },
+        ordered: { $ne: true },
       });
 
       let cartsId = [];
@@ -333,24 +333,27 @@ router.get('/success', authController.protect, async (req, res) => {
 });
 
 //test order
-// router.post('/test-order', async (req, res) => {
-//   const carts = await Cart.find({ user: req.user.id, active: { $ne: true } });
+router.post('/test-order', authController.protect, async (req, res) => {
+  const carts = await Cart.find({
+    user: req.user.id,
+    ordered: { $ne: true },
+  });
 
-//   let cartsId = [];
-//   for (var i = 0; i < carts.length; i++) {
-//     cartsId.push(carts[i].id);
-//     await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
-//   }
+  let cartsId = [];
+  for (var i = 0; i < carts.length; i++) {
+    cartsId.push(carts[i].id);
+    await Cart.findByIdAndUpdate(carts[i].id, { ordered: true });
+  }
 
-//   const newOrder = await Order.create({
-//     user: req.user.id,
-//     carts: cartsId,
-//     paid: true,
-//     address: req.user.address,
-//   });
+  const newOrder = await Order.create({
+    user: req.user.id,
+    carts: cartsId,
+    paid: true,
+    address: req.user.address,
+  });
 
-//   res.redirect(`/orders/${newOrder.id}`);
-// });
+  res.redirect(`/orders/${newOrder.id}`);
+});
 
 router.get('/cancell', authController.protect, (req, res) => {
   res.send("didn't happen");

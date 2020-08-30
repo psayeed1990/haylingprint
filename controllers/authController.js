@@ -4,6 +4,7 @@ const { promisify } = require('util');
 const catchAsync = require('./../utils/catchAsync');
 const Email = require('./../utils/email');
 const AppError = require('./../utils/appError');
+const validator = require('validator');
 
 //create JWT token
 const createToken = (id) => {
@@ -40,6 +41,16 @@ const sendToken = (user, statusCode, req, res, origin) => {
 //sign up
 exports.signup = catchAsync(async (req, res, next) => {
   //check if email already exist
+  if (req.body.password !== req.body.passwordConfirm) {
+    return res.render('auth/register', { message: 'Password does not match' });
+  }
+  const pass = req.body.password.toString();
+  if (pass.length < 12) {
+    return res.render('auth/register', {
+      message: 'Password should be 12 characters at least',
+    });
+  }
+
   const oldUser = await User.findOne({ email: req.body.email });
   if (oldUser) {
     return res.render('auth/login', {
@@ -47,6 +58,9 @@ exports.signup = catchAsync(async (req, res, next) => {
     });
   }
 
+  // if (!validator.isEmail(req.body.email)) {
+  //   return res.render('auth/register', { message: 'Invalid email address' });
+  // }
   //create new user
   const newUser = await User.create({
     name: req.body.name,

@@ -9,9 +9,9 @@
         </a>
     
         <a href="/categories/<%= product.category.id %>">
-                    <p>Category: <%= product.category.name %></p>
+                    <p style="color: cadetblue;">Category: <%= product.category.name %></p>
                 </a>
-        <p> <%= product.description %></p>
+        <p style="padding: 20px; border-bottom: 1px solid; width: max-content; margin: 20px auto"> <%= product.description %></p>
 
 
 
@@ -36,36 +36,46 @@
 
                 <div style="margin: 30px;" id="secondLevel-form">
 
-                    <label id="secondLevel-name" style="font-weight: bold;"></label>
+                    <label id="secondLevel-name" style="font-weight: bold; padding-right: 40px;"></label>
 
                 </div>
-
-                <div style="margin: 30px;" id="thirdLevel-form">
+                <label id="thirdLevel-name" style="font-weight: bold;"></label>
+                <select name="thirdVariableName" style="margin: 30px auto; display: inline;" id="thirdLevel-form">
                 
-                    <label id="thirdLevel-name" style="font-weight: bold;"></label>
+                    
                 
-                </div>
+                </select>
 
     
-        <p>Price: <span id="price"><%= product.price %></span></p>
+        <p>Price: <span class="numbers" id="price"><%= product.price %></span></p>
         
     
         <form action="/add-to-cart" method="POST" enctype="multipart/form-data">
-            <label style="display: inline;">Quantity: </label> <input id="quantity" name="quantity" type="number"
-                style="width: 40px; display: inline;" min="1" required>
+            <input id="quantity" name="quantity" type="hidden"
+                style="width: 40px; display: inline;" value="1" min="1" required>
             <input type="hidden" id="product-id" name="product" value="<%= product.id%>">
             <input type="hidden" id="sku" name="SKU" value="<%= product.SKU %>">
+            <br>
+
+            <% if(product.laminatingPrice){ %>
+            <input type="radio" id="laminatingPrice" style="display: inline;width: 5px;" name="laminatingPrice"
+                value="<%= product.laminatingPrice %>" />
+            
+            <label style="display: inline;background: #ffe1b9;padding: 8px;margin: 0px;color: #685e5e;">Laminating</label>
+            
+            <input type="radio" id="laminatingPrice" style="display: inline;width: 5px;" name="laminatingPrice" value="0" />
+            
+            <label style="display: inline;background: #ffe1b9;padding: 8px;margin: 0px;color: #685e5e;">No Laminating </label>
+            <% } %>
+            <br>
+
             
             <br><br><label>Upload a design of your choice</label><input style="width: 150px;" type="file" id="imageCover" name="imageCover">
             
             
             
             
-            <% if(product.laminatingPrice){ %>
-                <input type="checkbox" id="laminatingPrice" style="display: inline;width: 5px;" name="laminatingPrice" value="<%= product.laminatingPrice %>" />
-                <label style="display: inline;background: #ffe1b9;padding: 8px;margin: 0px;color: #685e5e;">Laminating:
-                    <%= product.laminatingPrice %> </label>
-            <% } %>
+            
             
 
             <input type="submit" id="add-cart" class="add-cart" value="Add to cart">

@@ -8,12 +8,13 @@
                     <div class="cart-product">
                         <a href="/products/<%= carts[i].product.id %>"><img src="/img/products/<%= carts[i].product.imageCover %>" width="100"></a>
                         <a href="/products/<%= carts[i].product.id %>"><p><%= carts[i].product.name %> | <%= carts[i].variantName %> | <%= carts[i].variantValue %></p></a>
-                        <p><b>Quantity:</b> <%= carts[i].quantity %></p>
+                       
                         <% let laminate = 0; %>
                         <%if(carts[i].LaminatingPrice){ %>
                             <% laminate += Number(carts[i].LaminatingPrice, 10) %>
+                            <p><b>Laminate:</b> <%= laminate %></p>
                         <% } %>
-                        <p><b>Price:</b> <%= carts[i].price %> | Laminate: <%= laminate %></p>
+                        <p><b>Price:</b> <%= carts[i].price %> </p>
                         <p><b>Total:</b> <%= carts[i].quantity * carts[i].price %></p>
                         <form method="POST" action="/update-cart">
                             <input type="hidden" value="<%= carts[i].id %>" name="id">

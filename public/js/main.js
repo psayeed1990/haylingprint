@@ -11,7 +11,7 @@ window.onload = function () {
 
     baseVariants.forEach((variant) => {
       baseName.innerHTML = variant.name + ': ';
-      variableForm.innerHTML += `<div style="padding-left: 40px;"><input class="base-radio" style="width: 40px; display: inline;" type="radio" name="baseVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
+      variableForm.innerHTML += `<div class="base-class"><input class="base-radio" style="width: 40px; display: inline;" type="radio" name="baseVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
     });
 
     let baseRadioClass = document.getElementsByClassName('base-radio');
@@ -51,7 +51,7 @@ window.onload = function () {
 
         secondLevel.forEach((variant) => {
           secondLevelName.innerHTML = variant.name + ': ';
-          secondLevelForm.innerHTML += `<div style="padding-left: 40px;"><input class="second-radio" style="width: 40px; display: inline;" type="radio" name="secondVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
+          secondLevelForm.innerHTML += `<div class="base-class" style="padding-left: 0"><input class="second-radio" style="width: 40px; display: inline;" type="radio" name="secondVariableName" value="${variant.value}" required="true"><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
         });
 
         let secondRadioClass = document.getElementsByClassName('second-radio');
@@ -73,7 +73,7 @@ window.onload = function () {
             }
             if (thirdLevel.length > 0) {
               document.getElementById('thirdLevel-form').style.display =
-                'block';
+                'inline';
               document
                 .getElementsByName('thirdVariableName')
                 .forEach((sec) => (sec.checked = false));
@@ -102,7 +102,7 @@ window.onload = function () {
 
             thirdLevel.forEach((variant) => {
               thirdLevelName.innerHTML = variant.name + ': ';
-              thirdLevelForm.innerHTML += `<div style="padding-left: 40px;"><input class="third-radio" style="width: 40px; display: inline;" type="radio" name="thirdVariableName" value="${variant.value}" required><label style="width: 40px; display: inline;">${variant.value}</label></div>`;
+              thirdLevelForm.innerHTML += `<option class="third-radio" style="width: 40px; display: inline;" value="${variant.value}" required>${variant.value}</option>`;
             });
 
             let thirdRadioClass = document.getElementsByClassName(

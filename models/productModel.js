@@ -25,7 +25,6 @@ const productSchema = new Schema(
     },
     price: {
       type: Number,
-      required: [true, 'Product price is required'],
       trim: true,
       maxlength: 6,
       minlength: 1,

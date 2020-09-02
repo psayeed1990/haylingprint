@@ -47,14 +47,14 @@ exports.updateOne = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    if (Model == Product) {
-      req.body.variants = {
-        name: req.body.variantsName,
-        value: req.body.variantsValue,
-        SKU: req.body.SKU,
-        price: req.body.price,
-      };
-    }
+    // if (Model == Product) {
+    //   req.body.variants = {
+    //     name: req.body.variantsName,
+    //     value: req.body.variantsValue,
+    //     SKU: req.body.SKU,
+    //     price: req.body.price,
+    //   };
+    // }
 
     const doc = await Model.create(req.body);
 

@@ -24,7 +24,7 @@
                 </a> -->
             <p> <%= product.summary %></p>
     
-            <p>Price: <%= product.price %></p>
+            <p>Price: <span class="numbers">£<%= product.price %></span></p>
            
     
             <a href="/products/<%= product.id%>"><button id="add-cart" class="add-cart">Buy Now</button></a>

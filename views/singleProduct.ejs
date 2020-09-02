@@ -58,14 +58,13 @@
             <br>
 
             <% if(product.laminatingPrice){ %>
-            <input type="radio" id="laminatingPrice" style="display: inline;width: 5px;" name="laminatingPrice"
-                value="<%= product.laminatingPrice %>" />
+                <label style="display: inline;padding: 8px;margin: 0px;">Laminate:</label>
+                <select name="laminatingPrice" required>
+                    <option>No Laminate</option>
+                    <option value="<%= product.laminatingPrice %>">Laminate</option>
+                    
+                </select>
             
-            <label style="display: inline;background: #ffe1b9;padding: 8px;margin: 0px;color: #685e5e;">Laminating</label>
-            
-            <input type="radio" id="laminatingPrice" style="display: inline;width: 5px;" name="laminatingPrice" value="0" />
-            
-            <label style="display: inline;background: #ffe1b9;padding: 8px;margin: 0px;color: #685e5e;">No Laminating </label>
             <% } %>
             <br>
 
